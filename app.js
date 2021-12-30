@@ -1,9 +1,10 @@
 var express = require('express');
 var cron = require('node-cron');
-const { Telegraf } = require('telegraf')
-var moment = require('jalali-moment');
+const { Telegraf } = require('telegraf');
 const got = require('got');
 const StringBuilder = require("string-builder");
+var moment = require('moment-timezone');
+
 const pricesPerMinuteSb = new StringBuilder();
 
 var app = express();
@@ -17,6 +18,7 @@ cron.schedule('*/2 * * * *', () => {
   let pricesListMessage=pricesPerMinuteSb.toString()
 
   console.log("prices is "+pricesListMessage);
+
   bot.telegram.editMessageText('@HsqbIh70KMFwzSoO',
   123,
   123,
@@ -25,7 +27,7 @@ cron.schedule('*/2 * * * *', () => {
 
   pricesPerMinuteSb.clear()
 
-  pricesPerMinuteSb.append(moment().locale('fa').format('dddd DD MMM HH:mm:ss'))
+  pricesPerMinuteSb.append(moment().tz("Asia/Tehran").format('HH:mm:ss'))
   pricesPerMinuteSb.appendLine();
 
   (async () => {
@@ -121,7 +123,7 @@ function appendItemtoMessage(item) {
 
       sb.clear()
 
-      sb.append(moment().locale('fa').format('dddd DD MMM HH:mm:ss'))
+      sb.append(moment().tz("Asia/Tehran").format('HH:mm:ss'))
       sb.appendLine();
 
       sb.append(globItem.r + " - " + item.pairName);
