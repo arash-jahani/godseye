@@ -158,10 +158,10 @@ function appendItemtoMessage(item) {
 // app.get('/', function (req, res) {
 //   res.send('Hello Arash!');
 // });
-// // set port, listen for requests
-// const PORT = 5001;
-// const hostname ='localhost'
-// app.listen(PORT,hostname, () => {
-//   console.log(`Server is running on port ${PORT}.`);
-// });
+// set port, listen for requests
+const PORT = 5001;
+const hostname ='localhost'
+app.listen(PORT,hostname, () => {
+  console.log(`Server is running on port ${PORT}.`);
+});
 
