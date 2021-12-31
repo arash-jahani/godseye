@@ -98,14 +98,14 @@ function appendItemtoMessage(kickexList, globalkeys) {
 
         var diff = ((globItem.pu - foundItem.lastPrice) / (globItem.pu)) * 100
 
-        var diffPrint = globItem.r + ". " + foundItem.pairName + " : price = " + foundItem.lastPrice + " : diff = " + diff.toString().substring(0, 4) + " %"
+        var diffPrint = globItem.r + ". " + foundItem.pairName.substring(0, 4) + " : P = " + foundItem.lastPrice + " : V = " + Math.round(foundItem.baseVol) + " : D = " + diff.toString().substring(0, 4) + " %"
 
         console.log(diffPrint);
 
         pricesPerMinuteSb.append(diffPrint);
         pricesPerMinuteSb.appendLine();
 
-        if (diff > 10 || diff < -10) {
+        if ((diff > 10 || diff < -10)&& foundItem.baseVol>2000) {
           
         sb.append(moment().tz("Asia/Tehran").format('HH:mm:ss'))
         sb.appendLine();
@@ -116,6 +116,8 @@ function appendItemtoMessage(kickexList, globalkeys) {
         sb.append("K: " + foundItem.lastPrice + "  (" + Math.round(foundItem.changePrice) + ") " + "  high: " + foundItem.highestPrice + "  low: " + foundItem.lowestPrice);
         sb.appendLine();
         sb.append("G: " + globItem.pu.toString().substring(0, 9) + "  (" + globItem.p24 + ")");
+        sb.appendLine();
+        sb.append("Vol: " + Math.round(foundItem.baseVol));
 
         sb.appendLine();
 
