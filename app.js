@@ -53,6 +53,21 @@ cron.schedule('*/1 * * * *', () => {
           || e.pairName === 'SHIB/USDT' //shiba-inu
           || e.pairName === 'SOL/USDT' //solana
           || e.pairName === 'TRX/USDT' //tron
+          || e.pairName === 'AVAX/USDT' //avalanche-2
+          || e.pairName === 'BAL/USDT' //balancer
+          || e.pairName === 'BAT/USDT' //basic-attention-token
+          || e.pairName === 'EGLD/USDT' //elrond-erd-2
+          || e.pairName === 'LRC/USDT' //loopring
+          || e.pairName === 'LTC/USDT' //litecoin
+          || e.pairName === 'NEAR/USDT' //near
+          || e.pairName === 'QUA/USDT' //quasacoin
+          || e.pairName === 'REN/USDT' //republic-protocol
+          || e.pairName === 'RSR/USDT' //reserve-rights-token
+          || e.pairName === 'SUSHI/USDT' //binance-peg-sushi
+          || e.pairName === 'TFL/USDT' //trueflip
+          || e.pairName === 'UNI/USDT' //uniswap
+          || e.pairName === 'XRP/USDT' //ripple
+          || e.pairName === 'ZRX/USDT' //
       )
 
 
@@ -61,6 +76,8 @@ cron.schedule('*/1 * * * *', () => {
       // });
       globalkeys = "dogecoin,axie-infinity,chiliz,ethereum-classic,the-graph,maker,zilliqa,cardano,cosmos,bittorrent-2,compound-governance-token"
         + "coti,curve-dao-token,polkadot,enjin-coin,gala,chainlink,decentraland,matic-network,ontology,the-sandbox,shiba-inu,solana,tron"
+        + "avalanche-2,balancer,basic-attention-token,elrond-erd-2,loopring,litecoin,near,quasacoin,republic-protocol,reserve-rights-token"
+        + "binance-peg-sushi,trueflip,uniswap,ripple,0x"
       appendItemtoMessage(kickexList, globalkeys)
 
 
@@ -98,34 +115,34 @@ function appendItemtoMessage(kickexList, globalkeys) {
 
         var diff = ((globItem.pu - foundItem.lastPrice) / (globItem.pu)) * 100
 
-        var diffPrint = globItem.r + ". " + foundItem.pairName.substring(0, 4) + " : P = " + foundItem.lastPrice + " : V = " + Math.round(foundItem.baseVol) + " : D = " + diff.toString().substring(0, 4) + " %"
+        var diffPrint = diff.toString().substring(0, 4) + " %  " + globItem.r + ". " + foundItem.pairName.substring(0, 4) + " : P = " + foundItem.lastPrice + " : V = " + Math.round(foundItem.quoteVol)
 
         console.log(diffPrint);
 
         pricesPerMinuteSb.append(diffPrint);
         pricesPerMinuteSb.appendLine();
 
-        if ((diff > 10 || diff < -10)&& foundItem.baseVol>2000) {
-          
-        sb.append(moment().tz("Asia/Tehran").format('HH:mm:ss'))
-        sb.appendLine();
+        if ((diff > 10 || diff < -10) && foundItem.quoteVol > 2000) {
 
-        sb.append(globItem.r + " - " + foundItem.pairName);
-        sb.appendLine();
+          sb.append(moment().tz("Asia/Tehran").format('HH:mm:ss'))
+          sb.appendLine();
 
-        sb.append("K: " + foundItem.lastPrice + "  (" + Math.round(foundItem.changePrice) + ") " + "  high: " + foundItem.highestPrice + "  low: " + foundItem.lowestPrice);
-        sb.appendLine();
-        sb.append("G: " + globItem.pu.toString().substring(0, 9) + "  (" + globItem.p24 + ")");
-        sb.appendLine();
-        sb.append("Vol: " + Math.round(foundItem.baseVol));
+          sb.append(globItem.r + " - " + foundItem.pairName);
+          sb.appendLine();
 
-        sb.appendLine();
+          sb.append("K: " + foundItem.lastPrice + "  (" + Math.round(foundItem.changePrice) + ") " + "  high: " + foundItem.highestPrice + "  low: " + foundItem.lowestPrice);
+          sb.appendLine();
+          sb.append("G: " + globItem.pu.toString().substring(0, 9) + "  (" + globItem.p24 + ")");
+          sb.appendLine();
+          sb.append("Vol: " + Math.round(foundItem.quoteVol));
 
-        sb.append("diff = " + diff.toString().substring(0, 4) + " %")
+          sb.appendLine();
 
-        sb.appendLine();
-        sb.append("------------");
-        sb.appendLine();
+          sb.append("diff = " + diff.toString().substring(0, 4) + " %")
+
+          sb.appendLine();
+          sb.append("------------");
+          sb.appendLine();
         }
       });
 
@@ -236,6 +253,51 @@ function findKickexIdByName(name) {
 
     case 'tron':
       return "TRX/USDT";
+
+    case 'avalanche-2':
+      return "AVAX/USDT";
+
+    case 'balancer':
+      return "BAL/USDT";
+
+    case 'basic-attention-token':
+      return "BAT/USDT";
+
+    case 'elrond-erd-2':
+      return "EGLD/USDT";
+
+    case 'loopring':
+      return "LRC/USDT";
+
+    case 'litecoin':
+      return "LTC/USDT";
+
+    case 'near':
+      return "NEAR/USDT";
+
+    case 'quasacoin':
+      return "QUA/USDT";
+
+    case 'republic-protocol':
+      return "REN/USDT";
+
+    case 'reserve-rights-token':
+      return "RSR/USDT";
+
+    case 'binance-peg-sushi':
+      return "SUSHI/USDT";
+
+    case 'trueflip':
+      return "TFL/USDT";
+
+    case 'uniswap':
+      return "UNI/USDT";
+
+    case 'ripple':
+      return "XRP/USDT";
+
+    case '0x':
+      return "ZRX/USDT";
 
     default:
       return ""
