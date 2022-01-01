@@ -64,7 +64,7 @@ cron.schedule('*/1 * * * *', () => {
           || e.pairName === 'REN/USDT' //republic-protocol
           || e.pairName === 'RSR/USDT' //reserve-rights-token
           || e.pairName === 'SUSHI/USDT' //binance-peg-sushi
-          || e.pairName === 'TFL/USDT' //trueflip
+         // || e.pairName === 'TFL/USDT' //trueflip
           || e.pairName === 'UNI/USDT' //uniswap
           || e.pairName === 'XRP/USDT' //ripple
           || e.pairName === 'ZRX/USDT' //
@@ -77,7 +77,7 @@ cron.schedule('*/1 * * * *', () => {
       globalkeys = "dogecoin,axie-infinity,chiliz,ethereum-classic,the-graph,maker,zilliqa,cardano,cosmos,bittorrent-2,compound-governance-token"
         + "coti,curve-dao-token,polkadot,enjin-coin,gala,chainlink,decentraland,matic-network,ontology,the-sandbox,shiba-inu,solana,tron"
         + "avalanche-2,balancer,basic-attention-token,elrond-erd-2,loopring,litecoin,near,quasacoin,republic-protocol,reserve-rights-token"
-        + "binance-peg-sushi,trueflip,uniswap,ripple,0x"
+        + "binance-peg-sushi,uniswap,ripple,0x"
       appendItemtoMessage(kickexList, globalkeys)
 
 
@@ -286,9 +286,6 @@ function findKickexIdByName(name) {
 
     case 'binance-peg-sushi':
       return "SUSHI/USDT";
-
-    case 'trueflip':
-      return "TFL/USDT";
 
     case 'uniswap':
       return "UNI/USDT";
