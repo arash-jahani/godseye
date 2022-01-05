@@ -122,7 +122,7 @@ function appendItemtoMessage(kickexList, globalkeys) {
         pricesPerMinuteSb.append(diffPrint);
         pricesPerMinuteSb.appendLine();
 
-        if ((diff > 5 || diff < -10) && foundItem.quoteVol > 2000) {
+        if ((diff > 10 || diff < -10) && foundItem.quoteVol > 2000) {
 
           sb.append(moment().tz("Asia/Tehran").format('HH:mm:ss:ms'))
           sb.appendLine();
