@@ -13,7 +13,7 @@ const bot = new Telegraf('5000095440:AAHkSxy2NdJSYvC95ktJ6Dmv3Dil9jTDxy0');
 
 
 
-cron.schedule('*/1 * * * *', () => {
+cron.schedule('*/22 * * * * *', () => {
 
   (async () => {
     try {
@@ -102,7 +102,7 @@ function appendItemtoMessage(kickexList, globalkeys) {
       sb.clear()
       pricesPerMinuteSb.clear()
 
-      pricesPerMinuteSb.append(moment().tz("Asia/Tehran").format('HH:mm:ss'))
+      pricesPerMinuteSb.append(moment().tz("Asia/Tehran").format('HH:mm:ss:ms'))
       pricesPerMinuteSb.appendLine();
 
       const coinsResponse = JSON.parse(response.body);
@@ -122,9 +122,9 @@ function appendItemtoMessage(kickexList, globalkeys) {
         pricesPerMinuteSb.append(diffPrint);
         pricesPerMinuteSb.appendLine();
 
-        if ((diff > 10 || diff < -10) && foundItem.quoteVol > 2000) {
+        if ((diff > 5 || diff < -10) && foundItem.quoteVol > 2000) {
 
-          sb.append(moment().tz("Asia/Tehran").format('HH:mm:ss'))
+          sb.append(moment().tz("Asia/Tehran").format('HH:mm:ss:ms'))
           sb.appendLine();
 
           sb.append(globItem.r + " - " + foundItem.pairName);
