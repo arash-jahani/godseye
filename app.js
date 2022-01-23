@@ -27,7 +27,7 @@ tekegranBot.launchBot();
 //   console.log("Drop and re-sync db.");
 // });
 
-cron.schedule('*/59 * * * * *', () => {
+cron.schedule('*/1 * * * *', () => {
 
   (async () => {
     try {
@@ -53,15 +53,6 @@ cron.schedule('*/59 * * * * *', () => {
       let filteredList = assetsResponse.filter(e => e.symbol.includes('USDT')) //axie-infinity)
 
       console.log("binance size :" + filteredList.length);
-
-      // setTimeout(function () { console.log("hi 11")}, 1000 )
-      // setTimeout(function () { console.log("hi 21")}, 3000 )
-      // setTimeout(function () { console.log("hi 31")}, 6000 )
-      // setTimeout(function () { console.log("hi 41")}, 9000 )
-      // setTimeout(function () { console.log("hi 51")}, 12000 )
-      // setTimeout(function () { console.log("hi 61")}, 15000 )
-      // setTimeout(function () { console.log("hi 71")}, 18000 )
-      
 
       setTimeout(function () { EX_cointiger.getData(filteredList)}, 1000 )
       setTimeout(function () { EX_fatbtc.getData(filteredList)}, 3000 )
