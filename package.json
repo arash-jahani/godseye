@@ -11,8 +11,9 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "express": "^4.17.1",
+    "express": "^4.17.2",
     "got": "^11.8.2",
+    "hashmap": "^2.4.0",
     "jalali-moment": "^3.3.10",
     "moment-timezone": "^0.5.34",
     "mysql2": "^2.3.3",

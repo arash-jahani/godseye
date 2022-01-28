@@ -130,4 +130,22 @@ exports.Coin=function(exchange,globalRank,name,diff,exLastPrice,globalLastPrice,
         {
             return exVol;
         }
+
+        this.toJson = function() {
+            return JSON.stringify({
+                exchange:this.getExchange(),
+                global_rank:this.getGlobalRank(),
+                name:this.getName(),
+                diff:this.getDiff(),
+                exchange_last_price:this.getEXLastprice(),
+                global_last_price:this.getLastGlobprice(),
+                global_price_change:this.getGlobPriceChange(),
+                exchange_change:this.getChange(),
+                exchange_vol:this.getEXVol(),
+                exchange_high_price:this.getEXhightprice(),
+                exchange_low_price:this.getEXlowprice(),
+                exchange_link:this.getExLink(),
+                global_link:this.getGlobalLink()
+            });
+        };
 };

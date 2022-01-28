@@ -2,6 +2,7 @@
 const StringBuilder = require("string-builder");
 var moment = require('moment-timezone');
 const { Coin } = require('./models/coin.model');
+var global = require('./Global.js');
 
 const { Telegraf, Markup } = require('telegraf');
 const bot = new Telegraf('5000095440:AAHkSxy2NdJSYvC95ktJ6Dmv3Dil9jTDxy0');
@@ -15,6 +16,8 @@ function handleCoinsList(exchange, messageId, coinArray) {
     coinArray.sort(function (a, b) {
         return b.getDiff() - a.getDiff();
     });
+
+    global.exchangesArrays.set(exchange,coinArray);
 
     let pinedMessageKeyboard = Markup.inlineKeyboard([getPinedMessageKeyboradLink(exchange)])
     let alertMessageKeyboard = Markup.inlineKeyboard([Markup.button.url(exchange, "https://stackoverflow.com/"), Markup.button.url("binance", "https://stackoverflow.com/")], { columns: 2 });
@@ -78,7 +81,9 @@ function handleCoinsList(exchange, messageId, coinArray) {
         //setTimeout(function () { handleCoinsList(exchange, messageId, coinArray) }, 500)
     })
 
-
+    //console.log(exchange +"--"+ global.exchangesArrays.size );
+    
+    
 }
 
 

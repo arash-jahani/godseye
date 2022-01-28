@@ -19,13 +19,22 @@ const EX_stex = require('./exchanges/stex.js')
 const EX_ztb = require('./exchanges/ztb.js')
 const EX_catex = require('./exchanges/catex.js')
 
+require("./routes/asset.routes")(app);
+
 
 const tekegranBot = require('./telegramBot.js')
 tekegranBot.launchBot();
 
+
 // db.sequelize.sync({ force: true }).then(() => {
 //   console.log("Drop and re-sync db.");
 // });
+// parse requests of content-type - application/json
+app.use(express.json());
+
+// parse requests of content-type - application/x-www-form-urlencoded
+app.use(express.urlencoded({ extended: true }));
+
 
 cron.schedule('*/1 * * * *', () => {
 
@@ -83,8 +92,8 @@ cron.schedule('*/1 * * * *', () => {
 //   res.send('Hello Arash!');
 // });
 // set port, listen for requests
-const PORT = 5001;
-const hostname = 'localhost'
+const PORT = 5000;
+const hostname = '0.0.0.0'
 app.listen(PORT, hostname, () => {
   console.log(`Server is running on port ${PORT}.`);
 });
