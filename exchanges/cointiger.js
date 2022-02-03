@@ -9,6 +9,10 @@ const { Coin } = require('../models/coin.model');
 let coinArray = [];
 let exchangeName="cointiger"
 
+let exchangeRefferallLink=""
+let exchangeBaseLink="https://www.cointiger.com/en-us/#/trade_center?coin="
+let globalBaseLink="https://www.binance.com/en/trade/"
+
 function allTickers(globItems) {
 
     (async () => {
@@ -32,7 +36,7 @@ function allTickers(globItems) {
 
                 let foundItem = cointsList[globItem.symbol.toUpperCase()]
 
-                if (foundItem === undefined) {
+                if (foundItem === undefined || foundItem.symbol==="BTT/USDT") {
                     return
                 }
                 if (foundItem.quoteVolume < 5000) {
@@ -49,9 +53,14 @@ function allTickers(globItems) {
                 let exchangeItemLowPrice = foundItem.low24hr
                 let exchangeItemChangePrice = foundItem.percentChange
 
-                let diff = ((globItem.price - exchangeItemLastPrice) / (globItem.price)) * 100
+                var exchangeLink=exchangeBaseLink +(exchangeItemPairName.replace('/USDT',"_USDT").toLowerCase())
+                var globalLink=globalBaseLink+exchangeItemPairName.replace('/USDT',"_USDT")
 
-                let coin = new Coin(exchangeName, 0, exchangeItemPairName, diff, exchangeItemLastPrice, globItem.price, 0, exchangeItemHighPrice, exchangeItemLowPrice, exchangeItemChangePrice, exchangeItemVol, "", "")
+                var diff = ((globItem.price - exchangeItemLastPrice) / (globItem.price)) * 100
+
+                var coin = new Coin(exchangeName,0, exchangeItemPairName, diff, exchangeItemLastPrice, globItem.price, 
+                    0, exchangeItemHighPrice, exchangeItemLowPrice,
+                     exchangeItemChangePrice, exchangeItemVol, exchangeLink, globalLink,exchangeRefferallLink)
 
                 coinArray.push(coin)
 

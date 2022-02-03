@@ -1,4 +1,4 @@
-exports.Coin=function(exchange,globalRank,name,diff,exLastPrice,globalLastPrice,globalPriceChange,exHighPrice,exLowPrice,exChange,exVol,exLink,globalLink)
+exports.Coin=function(exchange,globalRank,name,diff,exLastPrice,globalLastPrice,globalPriceChange,exHighPrice,exLowPrice,exChange,exVol,exLink,globalLink,refferalLink)
     {
         exchange=exchange;
         globalRank=globalRank;
@@ -13,6 +13,16 @@ exports.Coin=function(exchange,globalRank,name,diff,exLastPrice,globalLastPrice,
         exLowPrice=exLowPrice;
         exLink=exLink;
         globalLink=globalLink;
+        refferalLink=refferalLink;
+
+        this.setRefferalLink=function(link){
+            refferalLink=link
+        }
+
+        this.getRefferalLink=function()
+        {
+            return refferalLink;
+        }
 
         this.setExLink=function(exLinkdata)
         {
@@ -145,7 +155,8 @@ exports.Coin=function(exchange,globalRank,name,diff,exLastPrice,globalLastPrice,
                 exchange_high_price:this.getEXhightprice(),
                 exchange_low_price:this.getEXlowprice(),
                 exchange_link:this.getExLink(),
-                global_link:this.getGlobalLink()
+                global_link:this.getGlobalLink(),
+                referral_link:this.getRefferalLink()
             });
         };
 };

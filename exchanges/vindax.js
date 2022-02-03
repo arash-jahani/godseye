@@ -10,6 +10,10 @@ let coinArray = [];
 let exchangeName="vindax"
 let messageId=5338
 
+let exchangeRefferallLink=""
+let exchangeBaseLink="https://vindax.com/exchange-base.html?symbol="
+let globalBaseLink="https://www.binance.com/en/trade/"
+
 
 function allTickers(globItems) {
 
@@ -29,7 +33,7 @@ function allTickers(globItems) {
 
                 let foundItem = cointsListFiltered.find(e => e.symbol === globItem.symbol)
 
-                if (foundItem === undefined   || foundItem.symbol==="RLCUSDT"|| foundItem.symbol==="BELUSDT") {
+                if (foundItem === undefined   || foundItem.symbol==="RLCUSDT"|| foundItem.symbol==="BELUSDT" || foundItem.symbol==="BTT/USDT") {
                     return
                 }
 
@@ -48,10 +52,16 @@ function allTickers(globItems) {
                 var exchangeItemLowPrice = foundItem.lowPrice
                 var exchangeItemChangePrice = foundItem.priceChangePercent
 
+                var exchangeLink=exchangeBaseLink +exchangeItemPairName.replace('/USDT',"_USDT")
+                var globalLink=globalBaseLink+exchangeItemPairName.replace('/USDT',"_USDT")
+
                 var diff = ((globItem.price - exchangeItemLastPrice) / (globItem.price)) * 100
 
-                var coin = new Coin(exchangeName,0, exchangeItemPairName, diff, exchangeItemLastPrice, globItem.price, 0, exchangeItemHighPrice, exchangeItemLowPrice, exchangeItemChangePrice, exchangeItemVol, "", "")
+                var coin = new Coin(exchangeName,0, exchangeItemPairName, diff, exchangeItemLastPrice, globItem.price, 
+                    0, exchangeItemHighPrice, exchangeItemLowPrice,
+                     exchangeItemChangePrice, exchangeItemVol, exchangeLink, globalLink,exchangeRefferallLink)
 
+                     
                 coinArray.push(coin)
 
             });

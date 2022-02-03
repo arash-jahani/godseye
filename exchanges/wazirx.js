@@ -10,6 +10,10 @@ let coinArray = [];
 let exchangeName="wazirx"
 let messageId=5335
 
+let exchangeRefferallLink=""
+let exchangeBaseLink="https://wazirx.com/exchange/"
+let globalBaseLink="https://www.binance.com/en/trade/"
+
 
 function allTickers(globItems) {
 
@@ -28,7 +32,7 @@ function allTickers(globItems) {
 
                 let foundItem = cointsListFiltered.find(e => e.symbol.toUpperCase() === globItem.symbol)
 
-                if (foundItem === undefined) {
+                if (foundItem === undefined || foundItem.symbol.toUpperCase()==="BTTUSDT") {
                     return
                 }
 
@@ -39,16 +43,21 @@ function allTickers(globItems) {
                 //console.log("found Item :" + foundItem.symbol);
 
                 var exchangeItemLastPrice = foundItem.lastPrice
-                var exchangeItemPairName = foundItem.symbol.replace('USDT', '/USDT').toUpperCase()
-                var exchangeItemVol = foundItem.volume
+                var exchangeItemPairName = foundItem.symbol.toUpperCase().replace('USDT', '/USDT')
+                var exchangeItemVol = foundItem.volume * foundItem.lastPrice
                 var exchangeItemHighPrice = foundItem.highPrice
                 var exchangeItemLowPrice = foundItem.lowPrice
                 var exchangeItemChangePrice = 0
 
+                var exchangeLink=exchangeBaseLink +exchangeItemPairName.replace('/USDT',"-USDT")
+                var globalLink=globalBaseLink+exchangeItemPairName.replace('/USDT',"_USDT")
+
                 var diff = ((globItem.price - exchangeItemLastPrice) / (globItem.price)) * 100
 
-                var coin = new Coin(exchangeName,0, exchangeItemPairName, diff, exchangeItemLastPrice, globItem.price, 0, exchangeItemHighPrice, exchangeItemLowPrice, exchangeItemChangePrice, exchangeItemVol, "", "")
-
+                var coin = new Coin(exchangeName,0, exchangeItemPairName, diff, exchangeItemLastPrice, globItem.price, 
+                    0, exchangeItemHighPrice, exchangeItemLowPrice,
+                     exchangeItemChangePrice, exchangeItemVol, exchangeLink, globalLink,exchangeRefferallLink)
+                     
                 coinArray.push(coin)
 
             });

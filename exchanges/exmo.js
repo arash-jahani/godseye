@@ -10,6 +10,10 @@ let coinArray = [];
 let exchangeName="exmo"
 let messageId=5337
 
+let exchangeRefferallLink=""
+let exchangeBaseLink="https://exmo.me/en/trade/"
+let globalBaseLink="https://www.binance.com/en/trade/"
+
 
 function allTickers(globItems) {
 
@@ -27,7 +31,7 @@ function allTickers(globItems) {
 
                 let foundItem = cointsList[globItem.symbol.replace('USDT','_USDT').toUpperCase()]
 
-                if (foundItem === undefined) {
+                if (foundItem === undefined || foundItem.symbol==="BTT/USDT") {
                     return
                 }
                 if (foundItem.vol < 5000) {
@@ -44,9 +48,15 @@ function allTickers(globItems) {
                 let exchangeItemLowPrice = foundItem.low
                 let exchangeItemChangePrice = 0
 
-                let diff = ((globItem.price - exchangeItemLastPrice) / (globItem.price)) * 100
+                var exchangeLink=exchangeBaseLink + exchangeItemPairName.replace('/USDT',"_USDT")
+                var globalLink=globalBaseLink+exchangeItemPairName.replace('/USDT',"_USDT")
 
-                let coin = new Coin(exchangeName, 0, exchangeItemPairName, diff, exchangeItemLastPrice, globItem.price, 0, exchangeItemHighPrice, exchangeItemLowPrice, exchangeItemChangePrice, exchangeItemVol, "", "")
+                var diff = ((globItem.price - exchangeItemLastPrice) / (globItem.price)) * 100
+
+                var coin = new Coin(exchangeName,0, exchangeItemPairName, diff, exchangeItemLastPrice, globItem.price, 
+                    0, exchangeItemHighPrice, exchangeItemLowPrice,
+                     exchangeItemChangePrice, exchangeItemVol, exchangeLink, globalLink,exchangeRefferallLink)
+
 
                 coinArray.push(coin)
 

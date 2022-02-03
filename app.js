@@ -15,7 +15,6 @@ const EX_wazirx = require('./exchanges/wazirx.js')
 const EX_liquid = require('./exchanges/liquid.js')
 const EX_exmo = require('./exchanges/exmo.js')
 const EX_vindax = require('./exchanges/vindax.js')
-const EX_stex = require('./exchanges/stex.js')
 const EX_ztb = require('./exchanges/ztb.js')
 const EX_catex = require('./exchanges/catex.js')
 
@@ -61,6 +60,7 @@ cron.schedule('*/1 * * * *', () => {
 
       let filteredList = assetsResponse.filter(e => e.symbol.includes('USDT')) //axie-infinity)
 
+
       console.log("binance size :" + filteredList.length);
 
       setTimeout(function () { EX_cointiger.getData(filteredList)}, 1000 )
@@ -72,7 +72,6 @@ cron.schedule('*/1 * * * *', () => {
       setTimeout(function () { EX_liquid.getData(filteredList)}, 13000 )
       setTimeout(function () { EX_exmo.getData(filteredList)}, 15000 )
       setTimeout(function () { EX_vindax.getData(filteredList)}, 17000 )
-      setTimeout(function () { EX_stex.getData(filteredList)}, 19000 )
       setTimeout(function () { EX_ztb.getData(filteredList)}, 21000 )
       setTimeout(function () { EX_catex.getData(filteredList)}, 23000 )
       setTimeout(function () { EX_ascendex.getData(filteredList)}, 25000 )

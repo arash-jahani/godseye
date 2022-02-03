@@ -10,6 +10,9 @@ let coinArray = [];
 let exchangeName="catex"
 let messageId=5341
 
+let exchangeRefferallLink=""
+let exchangeBaseLink="https://www.catex.io/trading/"
+let globalBaseLink="https://www.binance.com/en/trade/"
 
 function allTickers(globItems) {
 
@@ -28,7 +31,7 @@ function allTickers(globItems) {
 
                 let foundItem = cointsListFiltered.find(e => e.pair.replace('/USDT','USDT').toUpperCase() === globItem.symbol)
 
-                if (foundItem === undefined || foundItem.symbol==="ATM/USDT") {
+                if (foundItem === undefined || foundItem.symbol==="ATM/USDT" || foundItem.symbol==="BTT/USDT") {
                     return
                 }
 
@@ -40,14 +43,19 @@ function allTickers(globItems) {
 
                 var exchangeItemLastPrice = foundItem.priceByBaseCurrency
                 var exchangeItemPairName = foundItem.pair.toUpperCase()
-                var exchangeItemVol = foundItem.volume24HoursByCurrency
+                var exchangeItemVol = foundItem.volume24HoursByCurrency * foundItem.priceByBaseCurrency
                 var exchangeItemHighPrice = 0
                 var exchangeItemLowPrice = 0
                 var exchangeItemChangePrice = 0
 
+                var exchangeLink=exchangeBaseLink + exchangeItemPairName
+                var globalLink=globalBaseLink+exchangeItemPairName.replace('/USDT',"_USDT")
+
                 var diff = ((globItem.price - exchangeItemLastPrice) / (globItem.price)) * 100
 
-                var coin = new Coin(exchangeName,0, exchangeItemPairName, diff, exchangeItemLastPrice, globItem.price, 0, exchangeItemHighPrice, exchangeItemLowPrice, exchangeItemChangePrice, exchangeItemVol, "", "")
+                var coin = new Coin(exchangeName,0, exchangeItemPairName, diff, exchangeItemLastPrice, globItem.price, 
+                    0, exchangeItemHighPrice, exchangeItemLowPrice,
+                     exchangeItemChangePrice, exchangeItemVol, exchangeLink, globalLink,exchangeRefferallLink)
 
                 coinArray.push(coin)
 

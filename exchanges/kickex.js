@@ -10,6 +10,10 @@ let coinArray = [];
 let exchangeName="kickex"
 let messageId=557
 
+let exchangeRefferallLink=""
+let exchangeBaseLink="https://kickex.com/en/trade/"
+let globalBaseLink="https://www.binance.com/en/trade/"
+
 
 function allTickers(globItems) {
 
@@ -29,7 +33,7 @@ function allTickers(globItems) {
 
                 let foundItem = cointsListFiltered.find(e => e.pairName.replace('/','') === globItem.symbol)
 
-                if (foundItem === undefined) {
+                if (foundItem === undefined || foundItem.symbol==="BTT/USDT") {
                     return
                 }
 
@@ -46,10 +50,16 @@ function allTickers(globItems) {
                 var exchangeItemLowPrice = foundItem.lowestPrice
                 var exchangeItemChangePrice = foundItem.changePrice
 
+                var exchangeLink=exchangeBaseLink +exchangeItemPairName.replace('/USDT',"-USDT")
+                var globalLink=globalBaseLink+exchangeItemPairName.replace('/USDT',"_USDT")
+
                 var diff = ((globItem.price - exchangeItemLastPrice) / (globItem.price)) * 100
 
-                var coin = new Coin(exchangeName,0, exchangeItemPairName, diff, exchangeItemLastPrice, globItem.price, 0, exchangeItemHighPrice, exchangeItemLowPrice, exchangeItemChangePrice, exchangeItemVol, "", "")
+                var coin = new Coin(exchangeName,0, exchangeItemPairName, diff, exchangeItemLastPrice, globItem.price, 
+                    0, exchangeItemHighPrice, exchangeItemLowPrice,
+                     exchangeItemChangePrice, exchangeItemVol, exchangeLink, globalLink,exchangeRefferallLink)
 
+                     
                 coinArray.push(coin)
 
             });
