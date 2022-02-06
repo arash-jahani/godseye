@@ -10,7 +10,7 @@ let coinArray = [];
 let exchangeName="latoken"
 let messageId=5333
 
-let exchangeRefferallLink=""
+let exchangeRefferallLink="https://latoken.com"
 let exchangeBaseLink="https://latoken.com/exchange/"
 let globalBaseLink="https://www.binance.com/en/trade/"
 
@@ -33,7 +33,7 @@ function allTickers(globItems) {
 
                 let foundItem = cointsListFiltered.find(e => e.symbol.replace('/','') === globItem.symbol)
 
-                if (foundItem === undefined || foundItem.symbol==="BTT/USDT") {
+                if (foundItem === undefined || foundItem.symbol==="BTT/USDT" || foundItem.symbol==="BULL/USDT") {
                     return
                 }
 

@@ -10,7 +10,7 @@ let coinArray = [];
 let exchangeName="catex"
 let messageId=5341
 
-let exchangeRefferallLink=""
+let exchangeRefferallLink="https://www.catex.io"
 let exchangeBaseLink="https://www.catex.io/trading/"
 let globalBaseLink="https://www.binance.com/en/trade/"
 

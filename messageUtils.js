@@ -5,6 +5,8 @@ const { Coin } = require('./models/coin.model');
 var global = require('./Global.js');
 
 const { Telegraf, Markup } = require('telegraf');
+
+
 const bot = new Telegraf('5000095440:AAHkSxy2NdJSYvC95ktJ6Dmv3Dil9jTDxy0');
 
 const exchangePinedMessage = new StringBuilder();
@@ -20,7 +22,6 @@ function handleCoinsList(exchange, messageId, coinArray) {
     global.exchangesArrays.set(exchange,coinArray);
 
     let pinedMessageKeyboard = Markup.inlineKeyboard([getPinedMessageKeyboradLink(exchange)])
-    let alertMessageKeyboard = Markup.inlineKeyboard([Markup.button.url(exchange, "https://stackoverflow.com/"), Markup.button.url("binance", "https://stackoverflow.com/")], { columns: 2 });
 
     exchangeAlertMessage.clear()
     exchangePinedMessage.clear()
@@ -51,7 +52,7 @@ function handleCoinsList(exchange, messageId, coinArray) {
         }
 
         // check if +10 diff exist send message to users subscribed
-        if ((coin.getDiff() > 15 || coin.getDiff() < -30) && coin.getEXVol() > 5000) {
+        if ((coin.getDiff() > 2 || coin.getDiff() < -30) && coin.getEXVol() > 5000) {
 
             //send new message
             let message = priceChangeAlertMessage(coin)
@@ -65,7 +66,11 @@ function handleCoinsList(exchange, messageId, coinArray) {
     //alert message
     if (exchangeAlertMessage.toString().length > 0) {
         console.log("alert price is " + exchangePinedMessage.toString());
-        bot.telegram.sendMessage("@HsqbIh70KMFwzSoO", exchangeAlertMessage.toString(), alertMessageKeyboard)
+
+        //let alertMessageKeyboard = Markup.inlineKeyboard([Markup.button.url(exchange, "https://stackoverflow.com/"), Markup.button.url("binance", "https://stackoverflow.com/")], { columns: 2 });
+
+
+        bot.telegram.sendMessage("-1001774132100", exchangeAlertMessage.toString(),{ parse_mode: 'Markdown',disable_web_page_preview : 'true' })
     }
 
     //update exchange pinned message
@@ -100,18 +105,18 @@ function priceChangeAlertMessage(coin) {
     sb.append(coin.getName());
     sb.appendLine();
 
-    sb.append(coin.getExchange() + ": " + formatPrice(coin.getEXLastprice()) + "  high: " + formatPrice(coin.getEXhightprice()) + "  low: " + formatPrice(coin.getEXlowprice()));
+    sb.append(`[${coin.getExchange()}](${coin.getExLink()}) : ${formatPrice(coin.getEXLastprice())}`);
     sb.appendLine();
-    sb.append("Binance: " + formatPrice(coin.getLastGlobprice()));
+    sb.append(`[Binance](${coin.getGlobalLink()}): ${formatPrice(coin.getLastGlobprice())}`);
     sb.appendLine();
-    sb.append("Vol: " + Math.round(coin.getEXVol()));
+    sb.append("Vol: " + Math.round(coin.getEXVol())+" USDT");
 
     sb.appendLine();
 
-    sb.append("diff = " + coin.getDiff().toString().substring(0, 4) + " %")
+    sb.append("Diff: " + coin.getDiff().toString().substring(0, 4) + " %")
 
     sb.appendLine();
-    sb.append("------------");
+    sb.appendLine();
     sb.appendLine();
 
     return sb.toString()

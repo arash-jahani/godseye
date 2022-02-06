@@ -10,7 +10,7 @@ let coinArray = [];
 let exchangeName="ascendex"
 let messageId=5334
 
-let exchangeRefferallLink=""
+let exchangeRefferallLink="https://ascendex.com"
 let exchangeBaseLink="https://ascendex.com/en/basic/cashtrade-spottrading/usdt/"
 let globalBaseLink="https://www.binance.com/en/trade/"
 

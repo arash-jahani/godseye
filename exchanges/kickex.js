@@ -10,7 +10,7 @@ let coinArray = [];
 let exchangeName="kickex"
 let messageId=557
 
-let exchangeRefferallLink=""
+let exchangeRefferallLink="https://kickex.com"
 let exchangeBaseLink="https://kickex.com/en/trade/"
 let globalBaseLink="https://www.binance.com/en/trade/"
 

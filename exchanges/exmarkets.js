@@ -9,7 +9,7 @@ const { Coin } = require('../models/coin.model');
 let coinArray = [];
 let exchangeName="exmarkets"
 
-let exchangeRefferallLink=""
+let exchangeRefferallLink="https://exmarkets.com"
 let exchangeBaseLink="https://exmarkets.com/trade/"
 let globalBaseLink="https://www.binance.com/en/trade/"
 

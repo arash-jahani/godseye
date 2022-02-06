@@ -10,7 +10,7 @@ let coinArray = [];
 let exchangeName="exmo"
 let messageId=5337
 
-let exchangeRefferallLink=""
+let exchangeRefferallLink="https://exmo.me"
 let exchangeBaseLink="https://exmo.me/en/trade/"
 let globalBaseLink="https://www.binance.com/en/trade/"
 

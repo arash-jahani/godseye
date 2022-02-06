@@ -10,7 +10,7 @@ let coinArray = [];
 let exchangeName="liquid"
 let messageId=5336
 
-let exchangeRefferallLink=""
+let exchangeRefferallLink="https://app.liquid.com"
 let exchangeBaseLink="https://app.liquid.com/exchange/"
 let globalBaseLink="https://www.binance.com/en/trade/"
 

@@ -10,7 +10,7 @@ let coinArray = [];
 let exchangeName="wazirx"
 let messageId=5335
 
-let exchangeRefferallLink=""
+let exchangeRefferallLink="https://wazirx.com"
 let exchangeBaseLink="https://wazirx.com/exchange/"
 let globalBaseLink="https://www.binance.com/en/trade/"
 

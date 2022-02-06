@@ -10,7 +10,7 @@ let coinArray = [];
 let exchangeName="ztb"
 let messageId=5340
 
-let exchangeRefferallLink=""
+let exchangeRefferallLink="https://www.ztb.im"
 let exchangeBaseLink="https://www.ztb.im/exchange?coin="
 let globalBaseLink="https://www.binance.com/en/trade/"
 

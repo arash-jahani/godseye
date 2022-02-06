@@ -10,7 +10,7 @@ let coinArray = [];
 let exchangeName="vindax"
 let messageId=5338
 
-let exchangeRefferallLink=""
+let exchangeRefferallLink="https://vindax.com"
 let exchangeBaseLink="https://vindax.com/exchange-base.html?symbol="
 let globalBaseLink="https://www.binance.com/en/trade/"
 
