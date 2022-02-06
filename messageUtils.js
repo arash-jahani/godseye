@@ -52,7 +52,7 @@ function handleCoinsList(exchange, messageId, coinArray) {
         }
 
         // check if +10 diff exist send message to users subscribed
-        if ((coin.getDiff() > 2 || coin.getDiff() < -30) && coin.getEXVol() > 5000) {
+        if ((coin.getDiff() > 10 || coin.getDiff() < -10) && coin.getEXVol() > 10000) {
 
             //send new message
             let message = priceChangeAlertMessage(coin)
@@ -115,7 +115,6 @@ function priceChangeAlertMessage(coin) {
 
     sb.append("Diff: " + coin.getDiff().toString().substring(0, 4) + " %")
 
-    sb.appendLine();
     sb.appendLine();
     sb.appendLine();
 
