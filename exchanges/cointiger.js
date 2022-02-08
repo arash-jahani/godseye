@@ -36,7 +36,7 @@ function allTickers(globItems) {
 
                 let foundItem = cointsList[globItem.symbol.toUpperCase()]
 
-                if (foundItem === undefined || foundItem.symbol==="BTT/USDT"|| foundItem.symbol==="CVP/USDT") {
+                if (foundItem === undefined || foundItem.symbol==="BTTUSDT"|| foundItem.symbol==="CVPUSDT") {
                     return
                 }
                 if (foundItem.quoteVolume < 5000) {
