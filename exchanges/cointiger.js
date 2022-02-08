@@ -27,7 +27,8 @@ function allTickers(globItems) {
             cointsList["BCHABCUSDT"]=undefined
             cointsList["BCHSVUSDT"]=undefined
             cointsList["TCTUSDT"]=undefined
-
+            cointsList["BTTUSDT"]=undefined
+            cointsList["CVPUSDT"]=undefined
 
             coinArray = [];
 
@@ -36,7 +37,7 @@ function allTickers(globItems) {
 
                 let foundItem = cointsList[globItem.symbol.toUpperCase()]
 
-                if (foundItem === undefined || foundItem.symbol==="BTTUSDT"|| foundItem.symbol==="CVPUSDT") {
+                if (foundItem === undefined) {
                     return
                 }
                 if (foundItem.quoteVolume < 5000) {
