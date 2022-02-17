@@ -107,7 +107,7 @@ function priceChangeAlertMessage(coin) {
 
     sb.append(`[${coin.getExchange()}](${coin.getExLink()}) : ${formatPrice(coin.getEXLastprice())}` +" USDT");
     sb.appendLine();
-    sb.append(`[Binance](${coin.getGlobalLink()}): ${formatPrice(coin.getLastGlobprice())}` +" USDT");
+    sb.append(`[Binance](${coin.getGlobalLink()}) : ${formatPrice(coin.getLastGlobprice())}` +" USDT");
     sb.appendLine();
     sb.append("Vol: " + Math.round(coin.getEXVol())+" USDT");
 
@@ -123,7 +123,7 @@ function priceChangeAlertMessage(coin) {
 
 function getCoinDiffMessage(coin) {
     //return coin.getDiff().toString().substring(0, 4) + "%  " + coin.getGlobalRank() + ". " + coin.getName() + " : P = " + coin.getEXLastprice() + " : V = " + Math.round(coin.getEXVol())
-    return "(%" + coin.getDiff().toString().substring(0, 4) + ") " + coin.getName() + "\n    " + coin.getExchange() + ": " + formatPrice(coin.getEXLastprice()) + " USDT , binance: " + formatPrice(coin.getLastGlobprice())+" USDT"
+    return "(%" + coin.getDiff().toString().substring(0, 4) + ") " + coin.getName() + "\n    " + coin.getExchange() + ": " + formatPrice(coin.getEXLastprice()) + " USDT\nBinance: " + formatPrice(coin.getLastGlobprice())+" USDT"
 }
 
 function formatPrice(p) {
@@ -157,7 +157,7 @@ function formatPrice(p) {
 
 function getPinedMessageKeyboradLink(exchange) {
 
-    switch (exchange) {
+    switch (exchange.toLowerCase()) {
         case "kickex":
             return Markup.button.url('Click to Buy/Sell at kickex.com', 'https://ref.kickex.com/BqkA4');
         case "exmarkets":
