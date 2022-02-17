@@ -5,37 +5,34 @@ const Op = db.Sequelize.Op
 // Create and Save a new Tutorial
 exports.create = async (subModel) => {
 
-//validate asset model
-
-   
     const subExist = await Subscription.findOne({ where: { phone: subModel.phone } })
     
     if (subExist == null) {
-        Subscription.create(subModel)
+        const result = await Subscription.create(subModel)
             .then(data => {
-                console.log("created")
+                return data
             })
             .catch(err => {
-                console.log("error")
-                throw TypeError("Some error occurred while creating the Asset.")
-
+                return err
             });
+            return result
+
     } else {
-        // await Subscription.update({ rank: subModel.rank, last_price: subModel.last_price, last_price_change_percent: subModel.last_price_change_percent }, {
-        //     where: {
-        //         index: subModel.index
-        //     }
+        const result = await Subscription.update({ name: subModel.name }, {
+            where: {
+                phone: subModel.phone,
+                chat_id: subModel.chat_id
+            }
             
-        // }).then(data => {
-        //     console.log("updated")
-        // })
-        // .catch(err => {
-        //     console.log("error")
-        //     throw TypeError("Some error occurred while updating the Asset.")
+        }).then(data => {
+            return data
+        })
+        .catch(err => {
+            return err
+        });
+        return result
 
-        // });
     }
-
 
 };
 
@@ -45,13 +42,73 @@ exports.findAll = (req, res) => {
 };
 
 // Find a single Tutorial with an id
-exports.findOne = (req, res) => {
-
+exports.findByChatId = async (chatId) => {
+    const subExist = await Subscription.findOne({ where: { chat_id: chatId } })
+    if (subExist == null) {
+            return "not exist"
+    }else{
+        return subExist
+    }
 };
 
 // Update a Tutorial by the id in the request
-exports.update = (req, res) => {
+exports.updateTransactionHash = async (chatId,transHash) => {
+    const result = await Subscription.update({ tx_hash: transHash,transaction_passed:false }, {
+        where: {
+            chat_id: chatId
+        }
+        
+    }).then(data => {
+        return data
+    })
+    .catch(err => {
+        return err
+    });
+    return result
+};
 
+// Update a Tutorial by the id in the request
+exports.updateInvitedCode = async (chatId,inviteCode) => {
+    const result = await Subscription.update({ invited_code: inviteCode }, {
+        where: {
+            chat_id: chatId
+        }
+        
+    }).then(data => {
+        return data
+    })
+    .catch(err => {
+        return "error"
+    });
+    return result
+};
+
+// Update a Tutorial by the id in the request
+exports.checkInviteCodeExist = async (inviteCode) => {
+    const subExist = await Subscription.findOne({ where: { referral_code: inviteCode } })
+    if (subExist == null) {
+            return "not exist"
+    }else{
+        return subExist
+    }
+};
+
+// Update a Tutorial by the id in the request
+exports.updateReferralOwnerCount = async (inviteCode) => {
+    var referralCount=await Subscription.findOne({ where: { referral_code: inviteCode } })
+
+    const result = await Subscription.update({ refferal_count: (referralCount.refferal_count+1) }, {
+        where: {
+            referral_code: inviteCode
+        }
+        
+    }).then(data => {
+        return data
+    })
+    .catch(err => {
+        return "error"
+    });
+    return result
 };
 
 // Delete a Tutorial with the specified id in the request

@@ -7,7 +7,7 @@ const messageUtils = require("../messageUtils");
 
 
 let coinArray = [];
-let exchangeName="ztb"
+let exchangeName="Ztb"
 let messageId=5340
 
 let exchangeRefferallLink="https://www.ztb.im"

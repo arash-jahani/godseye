@@ -21,6 +21,7 @@
     "persian-number": "^1.5.1",
     "sequelize": "^6.13.0",
     "string-builder": "^0.1.8",
-    "telegraf": "^4.4.1"
+    "telegraf": "^4.4.1",
+    "valid-url": "^1.0.9"
   }
 }

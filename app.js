@@ -25,9 +25,9 @@ const tekegranBot = require('./telegramBot.js')
 tekegranBot.launchBot();
 
 
-// db.sequelize.sync({ force: true }).then(() => {
-//   console.log("Drop and re-sync db.");
-// });
+db.sequelize.sync({ force: false }).then(() => {
+  console.log("Drop and re-sync db.");
+});
 // parse requests of content-type - application/json
 app.use(express.json());
 
@@ -87,9 +87,9 @@ cron.schedule('*/1 * * * *', () => {
 
 
 
-// app.get('/', function (req, res) {
-//   res.send('Hello Arash!');
-// });
+app.get('/', function (req, res) {
+  res.send('Hello Arash!');
+});
 // set port, listen for requests
 const PORT = 5000;
 const hostname = '0.0.0.0'

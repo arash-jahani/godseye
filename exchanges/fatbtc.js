@@ -7,7 +7,7 @@ const { Coin } = require('../models/coin.model');
 
 
 let coinArray = [];
-let exchangeName="fatbtc"
+let exchangeName="Fatbtc"
 
 let exchangeRefferallLink="https://www.fatbtc.com"
 let exchangeBaseLink="https://www.fatbtc.com/trading?currency="

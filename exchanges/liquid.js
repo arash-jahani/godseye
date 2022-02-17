@@ -7,7 +7,7 @@ const messageUtils = require("../messageUtils");
 
 
 let coinArray = [];
-let exchangeName="liquid"
+let exchangeName="Liquid"
 let messageId=5336
 
 let exchangeRefferallLink="https://app.liquid.com"

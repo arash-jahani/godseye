@@ -76,7 +76,7 @@ function handleCoinsList(exchange, messageId, coinArray) {
     //update exchange pinned message
     console.log(exchange + " : message Updated ");
 
-    bot.telegram.editMessageText('@HsqbIh70KMFwzSoO',
+    bot.telegram.editMessageText('@crypto_arbitrage_signal',
         messageId,
         messageId,
         exchangePinedMessage.toString(),
@@ -105,15 +105,15 @@ function priceChangeAlertMessage(coin) {
     sb.append(coin.getName());
     sb.appendLine();
 
-    sb.append(`[${coin.getExchange()}](${coin.getExLink()}) : ${formatPrice(coin.getEXLastprice())}`);
+    sb.append(`[${coin.getExchange()}](${coin.getExLink()}) : ${formatPrice(coin.getEXLastprice())}` +" USDT");
     sb.appendLine();
-    sb.append(`[Binance](${coin.getGlobalLink()}): ${formatPrice(coin.getLastGlobprice())}`);
+    sb.append(`[Binance](${coin.getGlobalLink()}): ${formatPrice(coin.getLastGlobprice())}` +" USDT");
     sb.appendLine();
     sb.append("Vol: " + Math.round(coin.getEXVol())+" USDT");
 
     sb.appendLine();
 
-    sb.append("Diff: " + coin.getDiff().toString().substring(0, 4) + " %")
+    sb.append("Diff: %" + coin.getDiff().toString().substring(0, 4) )
 
     sb.appendLine();
     sb.appendLine();
@@ -123,7 +123,7 @@ function priceChangeAlertMessage(coin) {
 
 function getCoinDiffMessage(coin) {
     //return coin.getDiff().toString().substring(0, 4) + "%  " + coin.getGlobalRank() + ". " + coin.getName() + " : P = " + coin.getEXLastprice() + " : V = " + Math.round(coin.getEXVol())
-    return "(" + coin.getDiff().toString().substring(0, 4) + "%) " + coin.getName() + "\n    " + coin.getExchange() + ": " + formatPrice(coin.getEXLastprice()) + " , binance: " + formatPrice(coin.getLastGlobprice())
+    return "(%" + coin.getDiff().toString().substring(0, 4) + ") " + coin.getName() + "\n    " + coin.getExchange() + ": " + formatPrice(coin.getEXLastprice()) + " USDT , binance: " + formatPrice(coin.getLastGlobprice())+" USDT"
 }
 
 function formatPrice(p) {

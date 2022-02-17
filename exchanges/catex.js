@@ -7,7 +7,7 @@ const messageUtils = require("../messageUtils");
 
 
 let coinArray = [];
-let exchangeName="catex"
+let exchangeName="Catex"
 let messageId=5341
 
 let exchangeRefferallLink="https://www.catex.io"

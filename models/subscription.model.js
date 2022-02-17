@@ -2,24 +2,54 @@ module.exports = (sequelize, Sequelize) => {
     const Subscription = sequelize.define("subscription", {
       uuid: {
         type: Sequelize.UUID,
-        defaultValue: Sequelize.UUIDV4
+        defaultValue: Sequelize.UUIDV4,
+        primaryKey: true,
       },
       phone: {
         type: Sequelize.STRING,
-        allowNull: true,
+        allowNull: false,
+        unique: true
+      },
+      chat_id: {
+        type: Sequelize.BIGINT,
+        defaultValue: 0 
+      },
+      name: {
+        type: Sequelize.STRING,
+        defaultValue: "" 
       },
       username: {
-        type: Sequelize.INTEGER 
+        type: Sequelize.STRING,
+        defaultValue: ""
       },
       expire_at: {
-        type: Sequelize.BIGINT
+        type: Sequelize.BIGINT,
+        defaultValue: 0
       },
       last_memo: {
-        type: Sequelize.STRING
+        type: Sequelize.INTEGER,
+        defaultValue: 0
       },
       tx_hash: {
-        type: Sequelize.STRING
-      }
+        type: Sequelize.STRING,
+        defaultValue: ""
+      },
+      transaction_passed: {
+        type: Sequelize.BOOLEAN,
+        defaultValue: false
+      },
+      invited_code: { // user invited by this code
+        type: Sequelize.BIGINT,
+        defaultValue: 0 
+      },
+      referral_code: { //user referral program code
+        type: Sequelize.BIGINT,
+        defaultValue: 0 
+      },
+      refferal_count: {
+        type: Sequelize.INTEGER,
+        defaultValue: 0 
+      },
     });
   
     return Subscription;

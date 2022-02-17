@@ -7,7 +7,7 @@ const { Coin } = require('../models/coin.model');
 
 
 let coinArray = [];
-let exchangeName="exmo"
+let exchangeName="Exmo"
 let messageId=5337
 
 let exchangeRefferallLink="https://exmo.me"

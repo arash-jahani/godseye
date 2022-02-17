@@ -7,7 +7,7 @@ const messageUtils = require("../messageUtils");
 
 
 let coinArray = [];
-let exchangeName="latoken"
+let exchangeName="Latoken"
 let messageId=5333
 
 let exchangeRefferallLink="https://latoken.com"

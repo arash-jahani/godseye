@@ -7,7 +7,7 @@ const messageUtils = require("../messageUtils");
 
 
 let coinArray = [];
-let exchangeName="kickex"
+let exchangeName="Kickex"
 let messageId=557
 
 let exchangeRefferallLink="https://kickex.com"
