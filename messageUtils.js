@@ -123,7 +123,7 @@ function priceChangeAlertMessage(coin) {
 
 function getCoinDiffMessage(coin) {
     //return coin.getDiff().toString().substring(0, 4) + "%  " + coin.getGlobalRank() + ". " + coin.getName() + " : P = " + coin.getEXLastprice() + " : V = " + Math.round(coin.getEXVol())
-    return "(%" + coin.getDiff().toString().substring(0, 4) + ") " + coin.getName() + "\n    " + coin.getExchange() + ": " + formatPrice(coin.getEXLastprice()) + " USDT\nBinance: " + formatPrice(coin.getLastGlobprice())+" USDT"
+    return "(%" + coin.getDiff().toString().substring(0, 4) + ") " + coin.getName() + "\n    " + coin.getExchange() + ": " + formatPrice(coin.getEXLastprice()) + " USDT\n    Binance: " + formatPrice(coin.getLastGlobprice())+" USDT"
 }
 
 function formatPrice(p) {
