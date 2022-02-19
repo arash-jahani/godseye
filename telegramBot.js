@@ -14,7 +14,7 @@ const serviceLog = require("./telegramLogBot.js");
 
 bot.command('start', ctx => {
 
-    serviceLog.reportLog(`${ctx.chat.id}\n start `)
+    serviceLog.reportLog(`#${ctx.chat.id}\n start `)
 
     bot.telegram.sendMessage(ctx.chat.id, `Hi there!\nWelcome to 'Crypto Arbitrage Signal' membership bot.\n/join\n/status\n/referral_program\n `)
 })
@@ -38,7 +38,6 @@ bot.command('join', ctx => {
 bot.on("contact", async (ctx) => {
 
     //todo : save user info
-    serviceLog.reportLog(`${ctx.chat.id}\n contact Granted`)
 
     var subModel = {
         phone: ctx.update.message.contact.phone_number,
@@ -48,6 +47,8 @@ bot.on("contact", async (ctx) => {
         last_memo: ctx.update.message.contact.user_id,
         referral_code: ctx.update.message.contact.user_id
     }
+
+    serviceLog.reportLog(`#${ctx.chat.id}\n${subModel.phone}\n${subModel.name}\n${subModel.username} contact Granted`)
 
     var userSubscription = await subController.create(subModel)
 
@@ -84,7 +85,7 @@ bot.on("contact", async (ctx) => {
 
 async function join(chatId) {
 
-    serviceLog.reportLog(`${chatId}\n join message`)
+    serviceLog.reportLog(`#${chatId}\n join message`)
 
     // if user have invite code calc dicount
     var discount = 0
@@ -142,13 +143,13 @@ bot.action("join_anyway", (ctx) => {
 })
 bot.hears("Cancel", (ctx) => {
 
-    serviceLog.reportLog(`${ctx.chat.id}\n contact denied!`)
+    serviceLog.reportLog(`#${ctx.chat.id}\n contact denied!`)
     //Print Log cancel
     bot.telegram.sendMessage(ctx.chat.id, "Please share your phone number, we use that to make subscription only. \n /join")
 })
 bot.action("contact_us", (ctx) => {
     //Print Log cancel
-    serviceLog.reportLog(`${ctx.chat.id}\n contact us`)
+    serviceLog.reportLog(`#${ctx.chat.id}\n contact us`)
     bot.telegram.sendMessage(ctx.chat.id, `contact us ${adminAccount}`)
 })
 
@@ -231,7 +232,7 @@ bot.command('referral_program', async ctx => {
 async function showPaymentSolutionsList(chatId, plan, amount) {
 
     //todo: get this user memo from db by chatid
-    serviceLog.reportLog(`${chatId}\n ${amount} pay message`)
+    serviceLog.reportLog(`#${chatId}\n ${amount} pay message`)
 
     var userSubscription = await subController.findByChatId(chatId)
     var discount=0
@@ -299,14 +300,14 @@ async function showPaymentSolutionsList(chatId, plan, amount) {
     })
 }
 bot.action('action_get_wallet_address', ctx => {
-    serviceLog.reportLog(`${ctx.chat.id}\n get address`)
+    serviceLog.reportLog(`#${ctx.chat.id}\n get address`)
     let displayMessage = waletlAddress;
     bot.telegram.sendMessage(ctx.chat.id, displayMessage)
 })
 
 bot.action('action_get_memo', async ctx => {
 
-    serviceLog.reportLog(`${ctx.chat.id}\n get memo`)
+    serviceLog.reportLog(`#${ctx.chat.id}\n get memo`)
 
     var userSubscription = await subController.findByChatId(ctx.chat.id)
     let displayMessage = ""
@@ -326,7 +327,7 @@ bot.action('action_get_memo', async ctx => {
 })
 
 bot.action('action_make_transaction', ctx => {
-    serviceLog.reportLog(`${ctx.chat.id}\n make transaction`)
+    serviceLog.reportLog(`#${ctx.chat.id}\n make transaction`)
 
     let displayMessage = `Please send transaction link here`;
     bot.telegram.sendMessage(ctx.chat.id, displayMessage)
@@ -338,7 +339,7 @@ bot.on("text", async ctx => {
     var response = ""
     var digitFormat = /^\d+$/;
 
-    serviceLog.reportLog(`${ctx.chat.id}\n message \n ${recivedMessage}`)
+    serviceLog.reportLog(`#${ctx.chat.id}\n message \n ${recivedMessage}`)
 
 
 
