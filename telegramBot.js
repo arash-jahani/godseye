@@ -244,7 +244,7 @@ bot.command('referral_program', async ctx => {
     })
 })
 
-bot.action('action_get_invite_code', ctx => {
+bot.action('action_get_invite_code', async ctx => {
     var message = ""
     var userSubscription = await subController.findByChatId(ctx.chat.id)
     if (userSubscription instanceof String) {
@@ -257,7 +257,7 @@ bot.action('action_get_invite_code', ctx => {
     bot.telegram.sendMessage(ctx.chat.id, message,{})
 });
 
-bot.action('action_send_withdraw_request', ctx => {
+bot.action('action_send_withdraw_request',async ctx => {
     var message = ""
     var userSubscription = await subController.findByChatId(ctx.chat.id)
     if (userSubscription instanceof String) {
