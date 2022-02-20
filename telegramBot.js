@@ -105,7 +105,7 @@ async function join(chatId) {
         plan1 = `1 Month: ${calcDiscount(49, discount)} USDT`
         plan2 = `6 Months: ${calcDiscount(149, discount)} USDT`
         plan3 = `2 Years: ${calcDiscount(249, discount)} USDT`
-        displayMessage="Discount was applied\n"
+        displayMessage="%15 discount was applied.\n"
     }
     console.log("discount is:" + discount)
 
@@ -149,12 +149,16 @@ bot.hears("Cancel", (ctx) => {
     //Print Log cancel
     bot.telegram.sendMessage(ctx.chat.id, "If you would like to subscribe, please provide your phone number. \n /join")
 })
-bot.action("contact_us", (ctx) => {
+bot.command("contact_us", (ctx) => {
     //Print Log cancel
     serviceLog.reportLog(`#${ctx.chat.id}\n contact us`)
-    bot.telegram.sendMessage(ctx.chat.id, `contact us ${adminAccount}`)
+    bot.telegram.sendMessage(ctx.chat.id, `contact us: ${adminAccount}`)
 })
+bot.action('contact_us', ctx => {
 
+    serviceLog.reportLog(`#${ctx.chat.id}\n contact us`)
+    bot.telegram.sendMessage(ctx.chat.id, `contact us: ${adminAccount}`)
+});
 bot.action('plan1', ctx => {
 
     showPaymentSolutionsList(ctx.chat.id, "plan1", 49)
@@ -204,7 +208,7 @@ bot.command('status', async ctx => {
     if (userSubscription.expire_at > today) {
         message = `Your subscription expire At ${userSubscription.expire_at}`
     } else {
-        message = `You dont have active subscription.`
+        message = `You do not have an active subscription.`
     }
 
 
@@ -226,7 +230,6 @@ bot.command('referral_program', async ctx => {
 
 
     bot.telegram.sendMessage(ctx.chat.id, message, {
-        caption: displayMessage,
         reply_markup: {
             inline_keyboard: [
                 [{
@@ -287,7 +290,7 @@ async function showPaymentSolutionsList(chatId, plan, amount) {
         discount = 15
     }
 
-    let displayMessage = `Send ${calcDiscount(amount, discount)} USDT to the wallet ADDRESS with the MEMO as shown in the attached image\nWe can recognize your transaction by the MEMO value, so make sure to enter it correctly, \nthen send the transaction link here`
+    let displayMessage = `Send ${calcDiscount(amount, discount)} USDT to the wallet ADDRESS with the MEMO as shown in the attached image\nWe can recognize your transaction by the MEMO value, so make sure to enter it correctly, \nthen send the transaction link here. \n\nMemo: ${userSubscription.last_memo} \nWallet address: ${waletlAddress}`
 
     bot.telegram.sendPhoto(chatId, { source: 'images/trustwallet.jpg' }, {
         caption: displayMessage,
@@ -369,7 +372,7 @@ bot.action('action_get_memo', async ctx => {
         }
     }
 
-    bot.telegram.sendMessage(ctx.chat.id, displayMessage)
+    bot.telegram.sendMessage(ctx.chat.id, displayMessage,{})
 })
 
 bot.action('action_make_transaction', ctx => {
