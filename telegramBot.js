@@ -1,5 +1,7 @@
 const { Telegraf, Markup, Extra } = require('telegraf');
 const bot = new Telegraf('5187064542:AAFYYNCvrHXVC3pVGMKAaVlr2jLF4G_PDh0'); //membership bot
+//live api : 5187064542:AAFYYNCvrHXVC3pVGMKAaVlr2jLF4G_PDh0
+//stg api : 5118338282:AAEDTEhFqwuDwpWSo9Yg9CAz1pdf7Ocl6BU
 
 const adminAccount = "@contact_us_24_7"
 const waletlAddress = "bnb17cefnzfaecg54g4q7tv2wdd4qz0a65j3t9n6jx"
@@ -16,7 +18,7 @@ bot.command('start', ctx => {
 
     serviceLog.reportLog(`#${ctx.chat.id}\n start `)
 
-    bot.telegram.sendMessage(ctx.chat.id, `Hi there!\nWelcome to 'Crypto Arbitrage Signal' membership bot.\n/join\n/status\n/referral_program\n `)
+    bot.telegram.sendMessage(ctx.chat.id, `Good to meet you!🤩\nWelcome to the 'Crypto Arbitrage Signal' membership bot.\n/join\n/status\n/referral_program\n `)
 })
 
 // bot.command('delete_messages', ctx => {
@@ -29,7 +31,7 @@ bot.command('start', ctx => {
 
 bot.command('join', ctx => {
 
-    bot.telegram.sendMessage(ctx.chat.id, "How can we contact you to create an account?", requestPhoneKeyboard).then(() => {
+    bot.telegram.sendMessage(ctx.chat.id, "Your account will be created by your phone number, please let us know what it is", requestPhoneKeyboard).then(() => {
         // handle user phone
     })
 
@@ -67,13 +69,13 @@ bot.on("contact", async (ctx) => {
     //     subscriptionMessage = `dear ${ctx.update.message.contact.first_name} your previous subscription plan expire at ${userSubscription.expire_at}  \n`
     // }
 
-    let displayMessage = `enter your invite code to get 15% off`;
+    let displayMessage = `Enter your invitation code to receive 15% off`;
 
     bot.telegram.sendMessage(ctx.chat.id, displayMessage, {
         reply_markup: {
             inline_keyboard: [
                 [{
-                    text: "I dont have invite code",
+                    text: "I don't have an invite code",
                     callback_data: 'join_anyway'
                 }
                 ]
@@ -108,7 +110,7 @@ async function join(chatId) {
     console.log("discount is:" + discount)
 
 
-     displayMessage =displayMessage + `dear ${userSubscription.name}\nWe accept ( USDT_BEP2 ) ,\nPlease select a subscription plan from the list below:`;
+     displayMessage =displayMessage + `dear ${userSubscription.name}\nWe accept ( USDT_BEP2 ) ,\nThe following subscription plans are available:`;
 
     bot.telegram.sendMessage(chatId, displayMessage, {
         parse_mode: 'HTML',
@@ -130,7 +132,7 @@ async function join(chatId) {
                 }
                 ],
                 [{
-                    text: "i want to pay with other coins",
+                    text: "Do you want to pay with another coin?",
                     callback_data: 'contact_us'
                 }
                 ]
@@ -145,7 +147,7 @@ bot.hears("Cancel", (ctx) => {
 
     serviceLog.reportLog(`#${ctx.chat.id}\n contact denied!`)
     //Print Log cancel
-    bot.telegram.sendMessage(ctx.chat.id, "Please share your phone number, we use that to make subscription only. \n /join")
+    bot.telegram.sendMessage(ctx.chat.id, "If you would like to subscribe, please provide your phone number. \n /join")
 })
 bot.action("contact_us", (ctx) => {
     //Print Log cancel
@@ -220,12 +222,56 @@ bot.command('referral_program', async ctx => {
         message = "Please Join First, /join"
         return
     }
-    message = `Balance: ${userSubscription.referral_count * 7} USDT \n Joined People: ${userSubscription.referral_count}\nYour Invite Code is ${userSubscription.referral_code} \nYou earn 7 USDT per successful subscription and someone who used your invite code get 15% off \nYou can send withdraw request with minimum 100 USDT balance.`
+    message = `Balance: ${userSubscription.referral_count * 5} USDT \nMembers Count: ${userSubscription.referral_count}\nYour Invite Code is: ${userSubscription.referral_code} \nYou earn 5 USDT for each successful subscription and anyone who uses your code get 15% off. \nWithdrawal requests are possible with a balance of at least 100 USDT.`
 
 
     bot.telegram.sendMessage(ctx.chat.id, message, {
+        caption: displayMessage,
+        reply_markup: {
+            inline_keyboard: [
+                [{
+                    text: "Get Invite Code",
+                    callback_data: 'action_get_invite_code'
+                }
+                ],
+                [{
+                    text: "Send Withdraw Request",
+                    callback_data: 'action_send_withdraw_request'
+                }
+                ]
+            ]
+        }
     })
 })
+
+bot.action('action_get_invite_code', ctx => {
+    var message = ""
+    var userSubscription = await subController.findByChatId(ctx.chat.id)
+    if (userSubscription instanceof String) {
+        message = "Please Join First, /join"
+        return
+    }
+    message = `Invite Code is:  ${userSubscription.referral_code}`
+
+
+    bot.telegram.sendMessage(ctx.chat.id, message,{})
+});
+
+bot.action('action_send_withdraw_request', ctx => {
+    var message = ""
+    var userSubscription = await subController.findByChatId(ctx.chat.id)
+    if (userSubscription instanceof String) {
+        message = "Please Join First, /join"
+        return
+    }
+    if(userSubscription.referral_count >= 20){
+        message = "Your request has been submitted, we will contact you shortly."
+    }else{
+        message = "The minimum withdrawal amount is 100 USDT."
+    }
+
+    bot.telegram.sendMessage(ctx.chat.id, message,{})
+});
 
 
 
@@ -241,7 +287,7 @@ async function showPaymentSolutionsList(chatId, plan, amount) {
         discount = 15
     }
 
-    let displayMessage = `Pleaes send ${calcDiscount(amount, discount)} USDT to this wallet ADDRESS With MEMO like attached image\nby MEMO value we could recognize your transaction so be careful to enter that correctly, \nthen send transaction link here`
+    let displayMessage = `Send ${calcDiscount(amount, discount)} USDT to the wallet ADDRESS with the MEMO as shown in the attached image\nWe can recognize your transaction by the MEMO value, so make sure to enter it correctly, \nthen send the transaction link here`
 
     bot.telegram.sendPhoto(chatId, { source: 'images/trustwallet.jpg' }, {
         caption: displayMessage,
@@ -352,7 +398,7 @@ bot.on("text", async ctx => {
             var updateHash = await subController.updateTransactionHash(ctx.chat.id, recivedMessage)
 
 
-            response = "you will recive successful message and inviteation link after transaction's confirmed"
+            response = "After the transaction is confirmed, you will receive a message and an invitation link"
 
         } else {
             response = 'message wrong!';
@@ -363,7 +409,7 @@ bot.on("text", async ctx => {
         console.log("inviteCode res: " + invitedCode)
         if (invitedCode === "not exist") {
 
-            response = "Invite Code is Wrong."
+            response = "The invitation code is incorrect."
             bot.telegram.sendMessage(ctx.chat.id, response, {
                 reply_markup: {
                     inline_keyboard: [
