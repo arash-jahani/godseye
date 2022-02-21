@@ -27,7 +27,7 @@ module.exports = (sequelize, Sequelize) => {
         defaultValue: 0
       },
       last_memo: {
-        type: Sequelize.INTEGER,
+        type: Sequelize.BIGINT,
         defaultValue: 0
       },
       tx_hash: {

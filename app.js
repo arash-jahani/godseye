@@ -25,7 +25,7 @@ const tekegranBot = require('./telegramBot.js')
 tekegranBot.launchBot();
 
 
-db.sequelize.sync({ force: false }).then(() => {
+db.sequelize.sync({ force: true }).then(() => {
   console.log("Drop and re-sync db.");
 });
 // parse requests of content-type - application/json

@@ -98,7 +98,7 @@ async function join(chatId) {
     var plan2 = `6 Months: ${calcDiscount(149, discount)} USDT`
     var plan3 = `2 Years: ${calcDiscount(249, discount)} USDT`
 
-    if (userSubscription.invited_code !== 0) {
+    if (userSubscription.invited_code >0) {
 
         discount = 15
 
