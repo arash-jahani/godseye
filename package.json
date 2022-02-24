@@ -11,17 +11,17 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "express": "^4.17.2",
-    "got": "^11.8.2",
+    "express": "^4.17.3",
+    "got": "^11.8.3",
     "hashmap": "^2.4.0",
-    "jalali-moment": "^3.3.10",
+    "jalali-moment": "^3.3.11",
     "moment-timezone": "^0.5.34",
     "mysql2": "^2.3.3",
     "node-cron": "^3.0.0",
     "persian-number": "^1.5.1",
-    "sequelize": "^6.13.0",
+    "sequelize": "^6.16.2",
     "string-builder": "^0.1.8",
-    "telegraf": "^4.4.1",
+    "telegraf": "^4.7.0",
     "valid-url": "^1.0.9"
   }
 }
