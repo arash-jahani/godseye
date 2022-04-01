@@ -29,7 +29,7 @@ function allTickers(globItems) {
             globItems.forEach(globItem => {
 
 
-                let foundItem = cointsList[globItem.symbol.replace('USDT','_USDT').toUpperCase()]
+                let foundItem = cointsList[globItem.symbol.replace('/USDT','_USDT').toUpperCase()]
 
                 if (foundItem === undefined || foundItem.symbol==="BTT/USDT"|| foundItem.symbol==="GMT/USDT") {
                     return
