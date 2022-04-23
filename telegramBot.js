@@ -163,7 +163,7 @@ bot.action('contact_us', ctx => {
 });
 bot.action('plan1', ctx => {
 
-    showPaymentSolutionsList(ctx.chat.id, "plan1", 49)
+    showPaymentSolutionsList(ctx.chat.id, "plan1", 9)
 
     return
     (async () => {
@@ -192,10 +192,10 @@ bot.action('plan1', ctx => {
     })()
 });
 bot.action('plan2', ctx => {
-    showPaymentSolutionsList(ctx.chat.id, "plan2", 149)
+    showPaymentSolutionsList(ctx.chat.id, "plan2", 36)
 });
 bot.action('plan3', ctx => {
-    showPaymentSolutionsList(ctx.chat.id, "plan3", 249)
+    showPaymentSolutionsList(ctx.chat.id, "plan3", 99)
 });
 
 bot.command('status', async ctx => {
