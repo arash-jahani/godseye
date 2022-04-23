@@ -69,19 +69,21 @@ bot.on("contact", async (ctx) => {
     //     subscriptionMessage = `dear ${ctx.update.message.contact.first_name} your previous subscription plan expire at ${userSubscription.expire_at}  \n`
     // }
 
-    let displayMessage = `Enter your invitation code to receive 15% off`;
+    join(ctx.chat.id)
 
-    bot.telegram.sendMessage(ctx.chat.id, displayMessage, {
-        reply_markup: {
-            inline_keyboard: [
-                [{
-                    text: "I don't have an invite code",
-                    callback_data: 'join_anyway'
-                }
-                ]
-            ]
-        }
-    })
+    // let displayMessage = `Enter your invitation code to receive 15% off`;
+
+    // bot.telegram.sendMessage(ctx.chat.id, displayMessage, {
+    //     reply_markup: {
+    //         inline_keyboard: [
+    //             [{
+    //                 text: "I don't have an invite code",
+    //                 callback_data: 'join_anyway'
+    //             }
+    //             ]
+    //         ]
+    //     }
+    // })
 
 })
 
@@ -94,19 +96,19 @@ async function join(chatId) {
     var userSubscription = await subController.findByChatId(chatId)
     var displayMessage=""
 
-    var plan1 = `1 Month: ${calcDiscount(49, discount)} USDT`
-    var plan2 = `6 Months: ${calcDiscount(149, discount)} USDT`
-    var plan3 = `2 Years: ${calcDiscount(249, discount)} USDT`
+    var plan1 = `1 Month: ${calcDiscount(9, discount)} USDT`
+    var plan2 = `6 Months: ${calcDiscount(36, discount)} USDT`
+    var plan3 = `2 Years: ${calcDiscount(99, discount)} USDT`
 
-    if (userSubscription.invited_code >0) {
+    // if (userSubscription.invited_code >0) {
 
-        discount = 15
+    //     discount = 15
 
-        plan1 = `1 Month: ${calcDiscount(49, discount)} USDT`
-        plan2 = `6 Months: ${calcDiscount(149, discount)} USDT`
-        plan3 = `2 Years: ${calcDiscount(249, discount)} USDT`
-        displayMessage="%15 discount was applied.\n"
-    }
+    //     plan1 = `1 Month: ${calcDiscount(49, discount)} USDT`
+    //     plan2 = `6 Months: ${calcDiscount(149, discount)} USDT`
+    //     plan3 = `2 Years: ${calcDiscount(249, discount)} USDT`
+    //     displayMessage="%15 discount was applied.\n"
+    // }
     console.log("discount is:" + discount)
 
 
@@ -140,9 +142,9 @@ async function join(chatId) {
         }
     })
 }
-bot.action("join_anyway", (ctx) => {
-    join(ctx.chat.id)
-})
+// bot.action("join_anyway", (ctx) => {
+//     join(ctx.chat.id)
+// })
 bot.hears("Cancel", (ctx) => {
 
     serviceLog.reportLog(`#${ctx.chat.id}\n contact denied!`)
@@ -226,25 +228,10 @@ bot.command('referral_program', async ctx => {
         message = "Please Join First, /join"
         return
     }
-    message = `Balance: ${userSubscription.referral_count * 5} USDT \nMembers Count: ${userSubscription.referral_count}\nYour Invite Code is: ${userSubscription.referral_code} \nYou earn 5 USDT for each successful subscription and anyone who uses your code get 15% off. \nWithdrawal requests are possible with a balance of at least 100 USDT.`
+    message = "soon"//`Balance: ${userSubscription.referral_count * 5} USDT \nMembers Count: ${userSubscription.referral_count}\nYour Invite Code is: ${userSubscription.referral_code} \nYou earn 5 USDT for each successful subscription and anyone who uses your code get 15% off. \nWithdrawal requests are possible with a balance of at least 100 USDT.`
 
 
-    bot.telegram.sendMessage(ctx.chat.id, message, {
-        reply_markup: {
-            inline_keyboard: [
-                [{
-                    text: "Get Invite Code",
-                    callback_data: 'action_get_invite_code'
-                }
-                ],
-                [{
-                    text: "Send Withdraw Request",
-                    callback_data: 'action_send_withdraw_request'
-                }
-                ]
-            ]
-        }
-    })
+    bot.telegram.sendMessage(ctx.chat.id, message)
 })
 
 bot.action('action_get_invite_code', async ctx => {
