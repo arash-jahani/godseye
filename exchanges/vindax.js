@@ -33,7 +33,8 @@ function allTickers(globItems) {
 
                 let foundItem = cointsListFiltered.find(e => e.symbol === globItem.symbol)
 
-                if (foundItem === undefined   || foundItem.symbol==="RLCUSDT"|| foundItem.symbol==="BELUSDT" || foundItem.symbol==="BTT/USDT" || foundItem.symbol==="PNTUSDT") {
+                if (foundItem === undefined   || foundItem.symbol==="RLCUSDT"|| foundItem.symbol==="BELUSDT" || foundItem.symbol==="BTT/USDT" || foundItem.symbol==="PNTUSDT"
+                || foundItem.symbol==="FTMUSDT") {
                     return
                 }
 

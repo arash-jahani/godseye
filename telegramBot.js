@@ -18,7 +18,7 @@ bot.command('start', ctx => {
 
     serviceLog.reportLog(`#${ctx.chat.id}\n start `)
 
-    bot.telegram.sendMessage(ctx.chat.id, `Good to meet you!🤩\nWelcome to the 'Crypto Arbitrage Signal' membership bot.\n/join\n/status\n/referral_program\n `)
+    bot.telegram.sendMessage(ctx.chat.id, `Good to meet you!🤩\nWelcome to the 'Crypto Arbitrage Signal' membership bot.\n/join\n/status\n `)
 })
 
 // bot.command('delete_messages', ctx => {
