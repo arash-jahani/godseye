@@ -33,7 +33,7 @@ function allTickers(globItems) {
 
                 let foundItem = cointsListFiltered.find(e => e.pairName.replace('/','') === globItem.symbol)
 
-                if (foundItem === undefined || foundItem.symbol==="BTT/USDT") {
+                if (foundItem === undefined || foundItem.pairName==="BTT/USDT") {
                     return
                 }
 
