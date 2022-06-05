@@ -32,7 +32,7 @@ function allTickers(globItems) {
 
                 let foundItem = cointsListFiltered.find(e => e.symbol.toUpperCase() === globItem.symbol)
 
-                if (foundItem === undefined || foundItem.symbol.toUpperCase()==="BTTUSDT") {
+                if (foundItem === undefined || foundItem.symbol.toUpperCase()==="BTTUSDT"|| foundItem.symbol.toUpperCase()==="BURGERUSDT") {
                     return
                 }
 

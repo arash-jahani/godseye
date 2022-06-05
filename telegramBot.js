@@ -293,7 +293,7 @@ async function showPaymentSolutionsList(chatId, plan, amount) {
                     callback_data: 'action_get_memo'
                 }
                 ], [{
-                    text: "I make this transaction",
+                    text: "Final Step: Send Transaction Link Here",
                     callback_data: 'action_make_transaction'
                 }
                 ]
