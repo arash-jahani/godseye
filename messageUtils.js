@@ -6,8 +6,17 @@ var global = require('./Global.js');
 
 const { Telegraf, Markup } = require('telegraf');
 
+var isProduction = true
 
-const bot = new Telegraf('5000095440:AAHkSxy2NdJSYvC95ktJ6Dmv3Dil9jTDxy0');
+// live  5000095440:AAHkSxy2NdJSYvC95ktJ6Dmv3Dil9jTDxy0    
+// stg : 5557197061:AAE2nhac0WxtRPaLANOFrBaBQw53hP_T_D8
+var bot;
+if (isProduction) {
+    bot = new Telegraf('5000095440:AAHkSxy2NdJSYvC95ktJ6Dmv3Dil9jTDxy0')
+} else {
+    bot = new Telegraf('5557197061:AAE2nhac0WxtRPaLANOFrBaBQw53hP_T_D8')
+}
+
 
 const exchangePinedMessage = new StringBuilder();
 const exchangeAlertMessage = new StringBuilder();
@@ -19,7 +28,7 @@ function handleCoinsList(exchange, messageId, coinArray) {
         return b.getDiff() - a.getDiff();
     });
 
-    global.exchangesArrays.set(exchange,coinArray);
+    global.exchangesArrays.set(exchange, coinArray);
 
     let pinedMessageKeyboard = Markup.inlineKeyboard([getPinedMessageKeyboradLink(exchange)])
 
@@ -69,26 +78,31 @@ function handleCoinsList(exchange, messageId, coinArray) {
 
         //let alertMessageKeyboard = Markup.inlineKeyboard([Markup.button.url(exchange, "https://stackoverflow.com/"), Markup.button.url("binance", "https://stackoverflow.com/")], { columns: 2 });
 
+        if (isProduction) {
+            bot.telegram.sendMessage("-1001774132100", exchangeAlertMessage.toString(), { parse_mode: 'Markdown', disable_web_page_preview: 'true' })
+        } else {
+            bot.telegram.sendMessage("@stg_signal_channel", exchangeAlertMessage.toString(), { parse_mode: 'Markdown', disable_web_page_preview: 'true' })
 
-        bot.telegram.sendMessage("-1001774132100", exchangeAlertMessage.toString(),{ parse_mode: 'Markdown',disable_web_page_preview : 'true' })
+        }
     }
 
     //update exchange pinned message
     console.log(exchange + " : message Updated ");
 
-    bot.telegram.editMessageText('@crypto_arbitrage_signal',
-        messageId,
-        messageId,
-        exchangePinedMessage.toString(),
-        pinedMessageKeyboard
+    if (isProduction)
+        bot.telegram.editMessageText('@crypto_arbitrage_signal',
+            messageId,
+            messageId,
+            exchangePinedMessage.toString(),
+            pinedMessageKeyboard
         ).catch((err) => {
-        console.log(exchange + " :errooooor : " + err);
-        //setTimeout(function () { handleCoinsList(exchange, messageId, coinArray) }, 500)
-    })
+            console.log(exchange + " :errooooor : " + err);
+            //setTimeout(function () { handleCoinsList(exchange, messageId, coinArray) }, 500)
+        })
 
     //console.log(exchange +"--"+ global.exchangesArrays.size );
-    
-    
+
+
 }
 
 
@@ -105,15 +119,15 @@ function priceChangeAlertMessage(coin) {
     sb.append(coin.getName());
     sb.appendLine();
 
-    sb.append(`[${coin.getExchange()}](${coin.getExLink()}) : ${formatPrice(coin.getEXLastprice())}` +" USDT");
+    sb.append(`[${coin.getExchange()}](${coin.getExLink()}) : ${formatPrice(coin.getEXLastprice())}` + " USDT");
     sb.appendLine();
-    sb.append(`[Binance](${coin.getGlobalLink()}) : ${formatPrice(coin.getLastGlobprice())}` +" USDT");
+    sb.append(`[Binance](${coin.getGlobalLink()}) : ${formatPrice(coin.getLastGlobprice())}` + " USDT");
     sb.appendLine();
-    sb.append("Vol: " + Math.round(coin.getEXVol())+" USDT");
+    sb.append("Vol: " + Math.round(coin.getEXVol()) + " USDT");
 
     sb.appendLine();
 
-    sb.append("Diff: %" + coin.getDiff().toString().substring(0, 4) )
+    sb.append("Diff: %" + coin.getDiff().toString().substring(0, 4))
 
     sb.appendLine();
     sb.appendLine();
@@ -123,7 +137,7 @@ function priceChangeAlertMessage(coin) {
 
 function getCoinDiffMessage(coin) {
     //return coin.getDiff().toString().substring(0, 4) + "%  " + coin.getGlobalRank() + ". " + coin.getName() + " : P = " + coin.getEXLastprice() + " : V = " + Math.round(coin.getEXVol())
-    return "(%" + coin.getDiff().toString().substring(0, 4) + ") " + coin.getName() + "\n    " + coin.getExchange() + ": " + formatPrice(coin.getEXLastprice()) + " USDT\n    Binance: " + formatPrice(coin.getLastGlobprice())+" USDT"
+    return "(%" + coin.getDiff().toString().substring(0, 4) + ") " + coin.getName() + "\n    " + coin.getExchange() + ": " + formatPrice(coin.getEXLastprice()) + " USDT\n    Binance: " + formatPrice(coin.getLastGlobprice()) + " USDT"
 }
 
 function formatPrice(p) {

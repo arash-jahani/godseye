@@ -52,8 +52,8 @@ exports.findByChatId = async (chatId) => {
 };
 
 // Update a Tutorial by the id in the request
-exports.updateTransactionHash = async (chatId,transHash) => {
-    const result = await Subscription.update({ tx_hash: transHash,transaction_passed:false }, {
+exports.updateAmount = async (chatId,amount) => {
+    const result = await Subscription.update({ amount: amount }, {
         where: {
             chat_id: chatId
         }
@@ -68,8 +68,8 @@ exports.updateTransactionHash = async (chatId,transHash) => {
 };
 
 // Update a Tutorial by the id in the request
-exports.updateInvitedCode = async (chatId,inviteCode) => {
-    const result = await Subscription.update({ invited_code: inviteCode }, {
+exports.updateWalletAddress = async (chatId,walletAddress,walletQr) => {
+    const result = await Subscription.update({ wallet_address: walletAddress,wallet_qr: walletQr }, {
         where: {
             chat_id: chatId
         }
@@ -83,16 +83,36 @@ exports.updateInvitedCode = async (chatId,inviteCode) => {
     return result
 };
 
+
 // Update a Tutorial by the id in the request
-exports.checkInviteCodeExist = async (inviteCode) => {
-    const subExist = await Subscription.findOne({ where: { referral_code: inviteCode } })
-    if (subExist == null) {
-            return "not exist"
+exports.getAmount = async (chatId) => {
+    const user = await Subscription.findOne({ where: { chat_id: chatId } })
+    if (user == null) {
+            return ""
     }else{
-        return subExist
+        return user.amount
     }
 };
 
+// Update a Tutorial by the id in the request
+exports.getWalletAddress = async (chatId) => {
+    const user = await Subscription.findOne({ where: { chat_id: chatId } })
+    if (user == null) {
+            return ""
+    }else{
+        return user.wallet_address
+    }
+};
+
+// Update a Tutorial by the id in the request
+exports.getWalletQr = async (chatId) => {
+    const user = await Subscription.findOne({ where: { chat_id: chatId } })
+    if (user == null) {
+            return ""
+    }else{
+        return user.wallet_qr
+    }
+};
 // Update a Tutorial by the id in the request
 exports.updateReferralOwnerCount = async (inviteCode) => {
     var referralCount=await Subscription.findOne({ where: { referral_code: inviteCode } })

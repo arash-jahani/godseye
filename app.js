@@ -64,18 +64,18 @@ cron.schedule('*/1 * * * *', () => {
 
       console.log("binance size :" + filteredList.length);
 
-      setTimeout(function () { EX_cointiger.getData(filteredList)}, 1000 )
-      setTimeout(function () { EX_fatbtc.getData(filteredList)}, 3000 )
-      setTimeout(function () { EX_kickex.getData(filteredList)}, 5000 )
-      setTimeout(function () { EX_exmarkets.getData(filteredList)}, 7000 )
-      setTimeout(function () { EX_latoken.getData(filteredList)}, 9000 )
-      setTimeout(function () { EX_wazirx.getData(filteredList)}, 11000 )
-      setTimeout(function () { EX_liquid.getData(filteredList)}, 13000 )
-      setTimeout(function () { EX_exmo.getData(filteredList)}, 15000 )
-      setTimeout(function () { EX_vindax.getData(filteredList)}, 17000 )
-      setTimeout(function () { EX_ztb.getData(filteredList)}, 21000 )
-      setTimeout(function () { EX_catex.getData(filteredList)}, 23000 )
-      setTimeout(function () { EX_ascendex.getData(filteredList)}, 25000 )
+      setTimeout(function () { EX_cointiger.getData(filteredList)}, 1500 )
+      setTimeout(function () { EX_fatbtc.getData(filteredList)}, 3500 )
+      setTimeout(function () { EX_kickex.getData(filteredList)}, 5500 )
+      setTimeout(function () { EX_exmarkets.getData(filteredList)}, 7500 )
+      setTimeout(function () { EX_latoken.getData(filteredList)}, 9500 )
+      setTimeout(function () { EX_wazirx.getData(filteredList)}, 11500 )
+      setTimeout(function () { EX_liquid.getData(filteredList)}, 13500 )
+      setTimeout(function () { EX_exmo.getData(filteredList)}, 15500 )
+      setTimeout(function () { EX_vindax.getData(filteredList)}, 17500 )
+      setTimeout(function () { EX_ztb.getData(filteredList)}, 21500 )
+      setTimeout(function () { EX_catex.getData(filteredList)}, 23500 )
+      setTimeout(function () { EX_ascendex.getData(filteredList)}, 25500 )
 
 
     } catch (error) {

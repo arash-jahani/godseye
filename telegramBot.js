@@ -1,17 +1,36 @@
+const { request } = require('express');
+const got = require('got');
 const { Telegraf, Markup, Extra } = require('telegraf');
-const bot = new Telegraf('5187064542:AAFYYNCvrHXVC3pVGMKAaVlr2jLF4G_PDh0'); //membership bot
+//const bot = new Telegraf('5187064542:AAFYYNCvrHXVC3pVGMKAaVlr2jLF4G_PDh0'); //membership bot
 //live api : 5187064542:AAFYYNCvrHXVC3pVGMKAaVlr2jLF4G_PDh0
 //stg api : 5118338282:AAEDTEhFqwuDwpWSo9Yg9CAz1pdf7Ocl6BU
+var isProduction = true
 
-const adminAccount = "@contact_us_24_7"
-const waletlAddress = "bnb17cefnzfaecg54g4q7tv2wdd4qz0a65j3t9n6jx"
+var bot;
+if (isProduction) {
+    bot = new Telegraf('5187064542:AAFYYNCvrHXVC3pVGMKAaVlr2jLF4G_PDh0')
+} else {
+    bot = new Telegraf('5118338282:AAEDTEhFqwuDwpWSo9Yg9CAz1pdf7Ocl6BU')
+}
+
 const subController = require("./controller/subscription.controller");
 const subscriptionModel = require('./models/subscription.model');
 const url = require("url");
 var validUrl = require('valid-url');
 const serviceLog = require("./telegramLogBot.js");
 
-
+const adminAccount = "@contact_us_24_7"
+const USDT_BEP2_waletlAddress = "bnb17cefnzfaecg54g4q7tv2wdd4qz0a65j3t9n6jx"
+const USDT_ERC20_waletlAddress = "0x9cd6722AcCC42187c05A468C4f24e552b0Fa4643"
+const USDT_TRC20_waletlAddress = "TLPkUuayHbYmfqHHSAoCB8gSHGSxdHk3de"
+const Bitcoin_waletlAddress = "bc1qpuf2x3prudpxhwd5uuwhmf0l2cnfqszexcx9p7"
+const Ethereum_waletlAddress = "0x9cd6722AcCC42187c05A468C4f24e552b0Fa4643"
+const Tron_waletlAddress = "TLPkUuayHbYmfqHHSAoCB8gSHGSxdHk3de"
+const BNB_waletlAddress = "bnb17cefnzfaecg54g4q7tv2wdd4qz0a65j3t9n6jx"
+const SmartChain_waletlAddress = "0x9cd6722AcCC42187c05A468C4f24e552b0Fa4643"
+const Dogecoin_waletlAddress = "DDexwaFk5HFkerTZYb8mNNN6yedeJNJTxG"
+const Solana_waletlAddress = "6VdgYPnh5UpiTNmFHKcq75ZZF2xp5hfcorbvq1dhzcgV"
+const Shiba_waletlAddress = "0x9cd6722AcCC42187c05A468C4f24e552b0Fa4643"
 
 
 bot.command('start', ctx => {
@@ -20,14 +39,6 @@ bot.command('start', ctx => {
 
     bot.telegram.sendMessage(ctx.chat.id, `Good to meet you!🤩\nWelcome to the 'Crypto Arbitrage Signal' membership bot.\n/join\n/status\n `)
 })
-
-// bot.command('delete_messages', ctx => {
-
-//     for (let i = 1; i < 101; i++) {
-//         ctx.deleteMessage(ctx.message.message_id - i).catch(er => { return })
-//     }
-
-// })
 
 bot.command('join', ctx => {
 
@@ -54,8 +65,12 @@ bot.on("contact", async (ctx) => {
 
     var userSubscription = await subController.create(subModel)
 
+    serviceLog.reportLog(`#${ctx.chat.id}\n user record:${userSubscription}`)
+
+    join(ctx.chat.id)
+
     //  if (userSubscription instanceof ){
-    console.log(`result is: error happen ${userSubscription}`)
+    //console.log(`result is: error happen ${userSubscription}`)
     //  }else{
     //    console.log(`result is: ${productCount}`)
 
@@ -69,7 +84,7 @@ bot.on("contact", async (ctx) => {
     //     subscriptionMessage = `dear ${ctx.update.message.contact.first_name} your previous subscription plan expire at ${userSubscription.expire_at}  \n`
     // }
 
-    join(ctx.chat.id)
+
 
     // let displayMessage = `Enter your invitation code to receive 15% off`;
 
@@ -93,12 +108,12 @@ async function join(chatId) {
 
     // if user have invite code calc dicount
     var discount = 0
-    var userSubscription = await subController.findByChatId(chatId)
-    var displayMessage=""
+    //var userSubscription = await subController.findByChatId(chatId)
+    var displayMessage = ""
 
-    var plan1 = `1 Month: ${calcDiscount(9, discount)} USDT`
-    var plan2 = `6 Months: ${calcDiscount(36, discount)} USDT`
-    var plan3 = `2 Years: ${calcDiscount(99, discount)} USDT`
+    var plan1 = `1 Month: 9 USDT`
+    var plan2 = `Unlimited: 49 USDT`
+
 
     // if (userSubscription.invited_code >0) {
 
@@ -112,7 +127,7 @@ async function join(chatId) {
     console.log("discount is:" + discount)
 
 
-     displayMessage =displayMessage + `dear ${userSubscription.name}\nWe accept ( USDT_BEP2 ) ,\nThe following subscription plans are available:`;
+    displayMessage = displayMessage + `The following subscription plans are available, \n choose on of them please `;
 
     bot.telegram.sendMessage(chatId, displayMessage, {
         parse_mode: 'HTML',
@@ -126,16 +141,6 @@ async function join(chatId) {
                 [{
                     text: plan2,
                     callback_data: 'plan2'
-                }
-                ],
-                [{
-                    text: plan3,
-                    callback_data: 'plan3'
-                }
-                ],
-                [{
-                    text: "Do you want to pay with another coin?",
-                    callback_data: 'contact_us'
                 }
                 ]
             ]
@@ -163,7 +168,7 @@ bot.action('contact_us', ctx => {
 });
 bot.action('plan1', ctx => {
 
-    showPaymentSolutionsList(ctx.chat.id, "plan1", 9)
+    showPaymentSolutionsList(ctx.chat.id, 9)
 
     return
     (async () => {
@@ -192,92 +197,244 @@ bot.action('plan1', ctx => {
     })()
 });
 bot.action('plan2', ctx => {
-    showPaymentSolutionsList(ctx.chat.id, "plan2", 36)
-});
-bot.action('plan3', ctx => {
-    showPaymentSolutionsList(ctx.chat.id, "plan3", 99)
-});
-
-bot.command('status', async ctx => {
-
-    var message = ""
-    var userSubscription = await subController.findByChatId(ctx.chat.id)
-    if (userSubscription instanceof String) {
-        message = "Please join first, /join"
-        return
-    }
-    var today = Date.now()
-    if (userSubscription.expire_at > today) {
-        message = `Your subscription expire At ${userSubscription.expire_at}`
-    } else {
-        message = `You do not have an active subscription.`
-    }
-
-
-
-    bot.telegram.sendMessage(ctx.chat.id, message, {
-    })
-})
-
-bot.command('referral_program', async ctx => {
-
-
-    var message = ""
-    var userSubscription = await subController.findByChatId(ctx.chat.id)
-    if (userSubscription instanceof String) {
-        message = "Please Join First, /join"
-        return
-    }
-    message = "soon"//`Balance: ${userSubscription.referral_count * 5} USDT \nMembers Count: ${userSubscription.referral_count}\nYour Invite Code is: ${userSubscription.referral_code} \nYou earn 5 USDT for each successful subscription and anyone who uses your code get 15% off. \nWithdrawal requests are possible with a balance of at least 100 USDT.`
-
-
-    bot.telegram.sendMessage(ctx.chat.id, message)
-})
-
-bot.action('action_get_invite_code', async ctx => {
-    var message = ""
-    var userSubscription = await subController.findByChatId(ctx.chat.id)
-    if (userSubscription instanceof String) {
-        message = "Please Join First, /join"
-        return
-    }
-    message = `Invite Code is:  ${userSubscription.referral_code}`
-
-
-    bot.telegram.sendMessage(ctx.chat.id, message,{})
-});
-
-bot.action('action_send_withdraw_request',async ctx => {
-    var message = ""
-    var userSubscription = await subController.findByChatId(ctx.chat.id)
-    if (userSubscription instanceof String) {
-        message = "Please Join First, /join"
-        return
-    }
-    if(userSubscription.referral_count >= 20){
-        message = "Your request has been submitted, we will contact you shortly."
-    }else{
-        message = "The minimum withdrawal amount is 100 USDT."
-    }
-
-    bot.telegram.sendMessage(ctx.chat.id, message,{})
+    showPaymentSolutionsList(ctx.chat.id, 49)
 });
 
 
+// bot.command('status', async ctx => {
 
-async function showPaymentSolutionsList(chatId, plan, amount) {
+//     var message = "this service not available.please contact us"
+//     // var userSubscription = await subController.findByChatId(ctx.chat.id)
+//     // if (userSubscription instanceof String) {
+//     //     message = "Please join first, /join"
+//     //     return
+//     // }
+//     // var today = Date.now()
+//     // if (userSubscription.expire_at > today) {
+//     //     message = `Your subscription expire At ${userSubscription.expire_at}`
+//     // } else {
+//     //     message = `You do not have an active subscription.`
+//     // }
+
+
+
+//     bot.telegram.sendMessage(ctx.chat.id, message, {
+//     })
+// })
+
+
+async function showPaymentSolutionsList(chatId, amount) {
+
+    var userSubscription = await subController.updateAmount(chatId, amount)
 
     //todo: get this user memo from db by chatid
     serviceLog.reportLog(`#${chatId}\n ${amount} pay message`)
 
-    var userSubscription = await subController.findByChatId(chatId)
-    var discount=0
-   
-    if (userSubscription.invited_code !== 0) {
-        discount = 15
+
+    let displayMessage = `Select one of the items below and send ${amount} USDTs of selected coin to its wallet address`
+
+    bot.telegram.sendMessage(chatId, displayMessage, {
+        reply_markup: {
+            inline_keyboard: [
+                [{
+                    text: "Tether(USDT) - BEP2",
+                    callback_data: 'select_coin_usdt_bep2'
+                }
+                ],
+                [{
+                    text: "Tether(USDT) - ERC20",
+                    callback_data: 'select_coin_usdt_erc20'
+                }
+                ],
+                [{
+                    text: "Tether(USDT) - TRC20",
+                    callback_data: 'select_coin_usdt_trc20'
+                }
+                ],
+                [{
+                    text: "Bitcoin(BTC)",
+                    callback_data: 'select_coin_bitcoin'
+                }
+                ],
+                [{
+                    text: "Ethereum(ETH)",
+                    callback_data: 'select_coin_ethereum'
+                }
+                ],
+                [{
+                    text: "Tron(TRX)",
+                    callback_data: 'select_coin_tron'
+                }
+                ],
+                [{
+                    text: "BNB(BNB)",
+                    callback_data: 'select_coin_bnb'
+                }
+                ],
+                [{
+                    text: "Smart Chain(BNB)",
+                    callback_data: 'select_coin_smartchain'
+                }
+                ],
+                [{
+                    text: "Dogecoin(DOGE)",
+                    callback_data: 'select_coin_dogecoin'
+                }
+                ],
+                [{
+                    text: "Solana(SOL)",
+                    callback_data: 'select_coin_solana'
+                }
+                ],
+                [{
+                    text: "Shiba INU(SHIB) - ERC20",
+                    callback_data: 'select_coin_shiba'
+                }
+                ]
+
+            ]
+        }
+    })
+}
+bot.action('select_coin_usdt_bep2', async ctx => {
+
+    var userSubscription = await subController.updateWalletAddress(ctx.chat.id, USDT_BEP2_waletlAddress, "images/usdt_bep2.jpg")
+
+    calcHowMuchTokenHaveToSend(ctx.chat.id, "Tether(USDT) - BEP2", "")
+})
+bot.action('select_coin_usdt_erc20', async ctx => {
+
+    var userSubscription = await subController.updateWalletAddress(ctx.chat.id, USDT_ERC20_waletlAddress, "images/usdt_erc20.jpg")
+
+    calcHowMuchTokenHaveToSend(ctx.chat.id, "Tether(USDT) - ERC20", "")
+})
+bot.action('select_coin_usdt_trc20', async ctx => {
+
+    var userSubscription = await subController.updateWalletAddress(ctx.chat.id, USDT_TRC20_waletlAddress, "images/usdt_trc20.jpg")
+
+    calcHowMuchTokenHaveToSend(ctx.chat.id, "Tether(USDT) - TRC20", "")
+})
+bot.action('select_coin_bitcoin', async ctx => {
+
+    var userSubscription = await subController.updateWalletAddress(ctx.chat.id, Bitcoin_waletlAddress, "images/bitcoin.jpg")
+
+    calcHowMuchTokenHaveToSend(ctx.chat.id, "Bitcoin(BTC)", "bitcoin")
+})
+bot.action('select_coin_ethereum', async ctx => {
+
+    var userSubscription = await subController.updateWalletAddress(ctx.chat.id, Ethereum_waletlAddress, "images/ethereum.jpg")
+
+    calcHowMuchTokenHaveToSend(ctx.chat.id, "Ethereum(ETH)", "ethereum")
+})
+bot.action('select_coin_tron', async ctx => {
+
+    var userSubscription = await subController.updateWalletAddress(ctx.chat.id, Tron_waletlAddress, "images/tron.jpg")
+
+    calcHowMuchTokenHaveToSend(ctx.chat.id, "Tron(TRX)", "tron")
+})
+bot.action('select_coin_bnb', async ctx => {
+
+    var userSubscription = await subController.updateWalletAddress(ctx.chat.id, BNB_waletlAddress, "images/bnb.jpg")
+
+    calcHowMuchTokenHaveToSend(ctx.chat.id, "BNB", "binance-coin")
+})
+bot.action('select_coin_smartchain', async ctx => {
+
+    var userSubscription = await subController.updateWalletAddress(ctx.chat.id, SmartChain_waletlAddress, "images/smartchain.jpg")
+
+    calcHowMuchTokenHaveToSend(ctx.chat.id, "Smart Chain(BNB)", "binance-coin")
+})
+bot.action('select_coin_dogecoin', async ctx => {
+
+    var userSubscription = await subController.updateWalletAddress(ctx.chat.id, Dogecoin_waletlAddress, "images/dogecoin.jpg")
+
+
+    calcHowMuchTokenHaveToSend(ctx.chat.id, "Dogecoin(DOGE)", "dogecoin")
+})
+bot.action('select_coin_solana', async ctx => {
+
+    var userSubscription = await subController.updateWalletAddress(ctx.chat.id, Solana_waletlAddress, "images/solana.jpg")
+
+    calcHowMuchTokenHaveToSend(ctx.chat.id, "Solana(SOL)", "solana")
+})
+bot.action('select_coin_shiba', async ctx => {
+
+    var userSubscription = await subController.updateWalletAddress(ctx.chat.id, Shiba_waletlAddress, "images/shiba_erc20.jpg")
+
+    calcHowMuchTokenHaveToSend(ctx.chat.id, "Shiba INU(SHIB) - ERC20", "shiba-inu")
+})
+
+async function calcHowMuchTokenHaveToSend(chatId, selectedCoin, coinId) {
+
+    var selectedAmount = await subController.getAmount(chatId)
+
+    if (coinId === "") {
+        showSelectedCryptoInfo(chatId, selectedCoin, selectedAmount)
+        return
     }
 
-    let displayMessage = `Send ${calcDiscount(amount, discount)} USDT to the wallet ADDRESS with the MEMO as shown in the attached image\nWe can recognize your transaction by the MEMO value, so make sure to enter it correctly, \nthen send the transaction link here. \n\nMemo: ${userSubscription.last_memo} \nWallet address: ${waletlAddress}`
+    (async () => {
+        try {
+
+            let response = await got(`https://api.coin-stats.com:443/v4/coins?ids=` + coinId);
+
+            let coinsArray = JSON.parse(response.body);
+
+            let coin = coinsArray.coins[0];
+
+            let finalAmount = (selectedAmount / coin.pu)
+
+            showSelectedCryptoInfo(chatId, selectedCoin, formatPrice(finalAmount))
+
+        } catch (error) {
+            showSelectedCryptoInfo(chatId, selectedCoin, selectedAmount + " USDT" + error)
+        };
+    })();
+}
+
+function formatPrice(p) {
+
+    let price = parseFloat(p)
+
+    if (price > 1)
+        return price.toFixed(2)
+    else if (price > 0.01)
+        return price.toFixed(3)
+    else if (price > 0.001)
+        return price.toFixed(4)
+    else if (price > 0.0001)
+        return price.toFixed(5)
+    else if (price > 0.00001)
+        return price.toFixed(6)
+    else if (price > 0.000001)
+        return price.toFixed(7)
+    else if (price > 0.0000001)
+        return price.toFixed(8)
+    else if (price > 0.00000001)
+        return price.toFixed(9)
+    else if (price > 0.000000001)
+        return price.toFixed(10)
+    else if (price > 0.0000000001)
+        return price.toFixed(11)
+    else
+        return price;
+
+}
+
+async function showSelectedCryptoInfo(chatId, selectedCoin, amout) {
+
+    //todo: get this user memo from db by chatid
+    serviceLog.reportLog(`#${chatId}\nmust pay ${amout} ${selectedCoin}`)
+
+    let walletAddress = await subController.getWalletAddress(chatId);
+    if (walletAddress === "") {
+        serviceLog.reportLog(`#${chatId}\n wallet address is empty`)
+        //Print Log cancel
+        bot.telegram.sendMessage(chatId, "oops! something changed please join again. \n /join")
+        return
+    }
+
+    let displayMessage = `you have to send  ${amout} ${selectedCoin}.\n\nsend only   ${selectedCoin}   to below address.\nSending any other coins may result in premanent loss.\n\n\n ${walletAddress}`
 
     bot.telegram.sendPhoto(chatId, { source: 'images/trustwallet.jpg' }, {
         caption: displayMessage,
@@ -289,10 +446,11 @@ async function showPaymentSolutionsList(chatId, plan, amount) {
                 }
                 ],
                 [{
-                    text: "Get Memo",
-                    callback_data: 'action_get_memo'
+                    text: "Get QR Code",
+                    callback_data: 'action_get_wallet_address_qr'
                 }
-                ], [{
+                ],
+                [{
                     text: "Final Step: Send Transaction Link Here",
                     callback_data: 'action_make_transaction'
                 }
@@ -300,72 +458,39 @@ async function showPaymentSolutionsList(chatId, plan, amount) {
             ]
         }
     })
-    return
-
-
-    bot.telegram.sendMessage(chatId, displayMessage, {
-        reply_markup: {
-            inline_keyboard: [
-                [{
-                    text: "USDT_BEP2",
-                    callback_data: 'request_payment_address'
-                }
-                ],
-                [{
-                    text: "BTCB_BEP2",
-                    callback_data: 'request_payment_address'
-                }
-                ],
-                [{
-                    text: "BNB_BEP2",
-                    callback_data: 'request_payment_address'
-                }
-                ],
-                [{
-                    text: "XLM",
-                    callback_data: 'request_payment_address'
-                }
-                ],
-                [{
-                    text: "ATOM",
-                    callback_data: 'request_payment_address'
-                }
-                ]
-            ]
-        }
-    })
 }
-bot.action('action_get_wallet_address', ctx => {
+
+bot.action('action_get_wallet_address', async ctx => {
+
     serviceLog.reportLog(`#${ctx.chat.id}\n get address`)
-    let displayMessage = waletlAddress;
+
+    let displayMessage = await subController.getWalletAddress(ctx.chat.id);
+    if (displayMessage === "") {
+        serviceLog.reportLog(`#${ctx.chat.id}\n wallet address is empty`)
+        //Print Log cancel
+        bot.telegram.sendMessage(ctx.chat.id, "oops! something changed please join again. \n /join")
+        return
+    }
     bot.telegram.sendMessage(ctx.chat.id, displayMessage)
 })
+bot.action('action_get_wallet_address_qr', async ctx => {
 
-bot.action('action_get_memo', async ctx => {
-
-    serviceLog.reportLog(`#${ctx.chat.id}\n get memo`)
-
-    var userSubscription = await subController.findByChatId(ctx.chat.id)
-    let displayMessage = ""
-    if (userSubscription instanceof String) {
-        displayMessage = "error! try again /join"
-
-    } else {
-        var memo = userSubscription.last_memo
-        if (memo === 0) {
-            displayMessage = "error! try again /join"
-        } else {
-            displayMessage = memo;
-        }
+    serviceLog.reportLog(`#${ctx.chat.id}\n get Qr Code`)
+    let qrAddress = await subController.getWalletQr(ctx.chat.id);
+    if (qrAddress === "") {
+        serviceLog.reportLog(`#${ctx.chat.id}\n wallet qr is empty`)
+        //Print Log cancel
+        bot.telegram.sendMessage(ctx.chat.id, "oops! something changed please join again. \n /join")
+        return
     }
+    bot.telegram.sendPhoto(ctx.chat.id, { source: qrAddress })
 
-    bot.telegram.sendMessage(ctx.chat.id, displayMessage,{})
 })
 
 bot.action('action_make_transaction', ctx => {
     serviceLog.reportLog(`#${ctx.chat.id}\n make transaction`)
 
-    let displayMessage = `Please send transaction link here`;
+    let displayMessage = `Send the transaction link here, and then wait for the invitation to join the premium channel.\nIt won't take more than a day to complete this process \nplease wait.`;
     bot.telegram.sendMessage(ctx.chat.id, displayMessage)
 })
 
@@ -378,47 +503,11 @@ bot.on("text", async ctx => {
     serviceLog.reportLog(`#${ctx.chat.id}\n message \n ${recivedMessage}`)
 
 
-
     if (validUrl.isUri(recivedMessage)) {
 
-        if (url.parse(recivedMessage).host === "explorer.binance.org") {
 
-            //todo: update user record and then send message to user : you recive success message after transaction confirmed
+        response = "After the transaction is confirmed, you will receive a message and an invitation link"
 
-            var updateHash = await subController.updateTransactionHash(ctx.chat.id, recivedMessage)
-
-
-            response = "After the transaction is confirmed, you will receive a message and an invitation link"
-
-        } else {
-            response = 'message wrong!';
-        }
-    } else if (digitFormat.test(recivedMessage)) {
-
-        var invitedCode = await subController.checkInviteCodeExist(recivedMessage)
-        console.log("inviteCode res: " + invitedCode)
-        if (invitedCode === "not exist") {
-
-            response = "The invitation code is incorrect."
-            bot.telegram.sendMessage(ctx.chat.id, response, {
-                reply_markup: {
-                    inline_keyboard: [
-                        [{
-                            text: "Join Anyway",
-                            callback_data: 'join_anyway'
-                        }
-                        ]
-                    ]
-                }
-            })
-            return
-        } else {
-
-            var updateInviteCode = await subController.updateInvitedCode(ctx.chat.id, recivedMessage)
-            //var updateReferralOwnerCount = await subController.updateReferralOwnerCount(recivedMessage)
-
-            join(ctx.chat.id)
-        }
 
     } else {
         response = 'message wrong!';
@@ -440,10 +529,6 @@ const requestPhoneKeyboard = {
     }
 };
 
-function calcDiscount(value, discount) {
-    var totalValue = value - (value * (discount / 100))
-    return totalValue.toFixed(2);
-}
 
 
 function launch() {

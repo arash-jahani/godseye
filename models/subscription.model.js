@@ -50,6 +50,18 @@ module.exports = (sequelize, Sequelize) => {
         type: Sequelize.INTEGER,
         defaultValue: 0 
       },
+      amount: { 
+        type: Sequelize.INTEGER,
+        defaultValue: 0 
+      },
+      wallet_address: { 
+        type: Sequelize.STRING,
+        defaultValue: "" 
+      },
+      wallet_qr: {
+        type: Sequelize.STRING,
+        defaultValue: ""
+      },
     });
   
     return Subscription;
