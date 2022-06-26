@@ -17,6 +17,9 @@ const EX_exmo = require('./exchanges/exmo.js')
 const EX_vindax = require('./exchanges/vindax.js')
 const EX_ztb = require('./exchanges/ztb.js')
 const EX_catex = require('./exchanges/catex.js')
+const EX_decoin = require('./exchanges/decoin.js')
+const EX_bitglobal = require('./exchanges/bitglobal.js')
+
 
 require("./routes/asset.routes")(app);
 
@@ -64,18 +67,20 @@ cron.schedule('*/1 * * * *', () => {
 
       console.log("binance size :" + filteredList.length);
 
-      setTimeout(function () { EX_cointiger.getData(filteredList)}, 1500 )
-      setTimeout(function () { EX_fatbtc.getData(filteredList)}, 3500 )
-      setTimeout(function () { EX_kickex.getData(filteredList)}, 5500 )
-      setTimeout(function () { EX_exmarkets.getData(filteredList)}, 7500 )
-      setTimeout(function () { EX_latoken.getData(filteredList)}, 9500 )
-      setTimeout(function () { EX_wazirx.getData(filteredList)}, 11500 )
-      setTimeout(function () { EX_liquid.getData(filteredList)}, 13500 )
-      setTimeout(function () { EX_exmo.getData(filteredList)}, 15500 )
-      setTimeout(function () { EX_vindax.getData(filteredList)}, 17500 )
-      setTimeout(function () { EX_ztb.getData(filteredList)}, 21500 )
-      setTimeout(function () { EX_catex.getData(filteredList)}, 23500 )
-      setTimeout(function () { EX_ascendex.getData(filteredList)}, 25500 )
+      setTimeout(function () { EX_cointiger.getData(filteredList)}, 1000 )
+      setTimeout(function () { EX_fatbtc.getData(filteredList)}, 2000 )
+      setTimeout(function () { EX_kickex.getData(filteredList)}, 3000 )
+      setTimeout(function () { EX_exmarkets.getData(filteredList)}, 4000 )
+      setTimeout(function () { EX_latoken.getData(filteredList)}, 5000 )
+      setTimeout(function () { EX_wazirx.getData(filteredList)}, 6000 )
+      setTimeout(function () { EX_liquid.getData(filteredList)}, 7000 )
+      setTimeout(function () { EX_exmo.getData(filteredList)}, 8000 )
+      setTimeout(function () { EX_vindax.getData(filteredList)}, 9000 )
+      setTimeout(function () { EX_ztb.getData(filteredList)}, 10000 )
+      setTimeout(function () { EX_catex.getData(filteredList)}, 11000 )
+      setTimeout(function () { EX_ascendex.getData(filteredList)}, 12000 )
+      setTimeout(function () { EX_decoin.getData(filteredList)}, 13000 )
+      setTimeout(function () { EX_bitglobal.getData(filteredList)}, 14000 )
 
 
     } catch (error) {

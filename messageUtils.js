@@ -18,9 +18,7 @@ if (isProduction) {
 }
 
 
-const exchangePinedMessage = new StringBuilder();
 const exchangeAlertMessage = new StringBuilder();
-
 
 
 function handleCoinsList(exchange, messageId, coinArray) {
@@ -30,35 +28,13 @@ function handleCoinsList(exchange, messageId, coinArray) {
 
     global.exchangesArrays.set(exchange, coinArray);
 
-    let pinedMessageKeyboard = Markup.inlineKeyboard([getPinedMessageKeyboradLink(exchange)])
 
     exchangeAlertMessage.clear()
-    exchangePinedMessage.clear()
-
-    // update top 5 in channel with link
-    exchangePinedMessage.append("update at: " + moment().tz("Asia/Tehran").format('HH:mm:ss.ms'))
-    exchangePinedMessage.appendLine();
-    exchangePinedMessage.append("#" + exchange + ", Top 6 Arbitrage Chance")
-    exchangePinedMessage.appendLine();
-    exchangePinedMessage.appendLine();
-
+   
+    
     for (let index = 0; index < coinArray.length; index++) {
 
         let coin = coinArray[index]
-
-        if (index < 3) {
-            exchangePinedMessage.append(getCoinDiffMessage(coin))
-            exchangePinedMessage.appendLine();
-        }
-        if (index == 3) {
-            exchangePinedMessage.append("...")
-            exchangePinedMessage.appendLine();
-        }
-
-        if (index >= (coinArray.length - 3)) {
-            exchangePinedMessage.append(getCoinDiffMessage(coin))
-            exchangePinedMessage.appendLine();
-        }
 
         // check if +10 diff exist send message to users subscribed
         if ((coin.getDiff() > 10) && coin.getEXVol() > 10000) {
@@ -66,15 +42,15 @@ function handleCoinsList(exchange, messageId, coinArray) {
             //send new message
             let message = priceChangeAlertMessage(coin)
 
-            //console.log("message is" + message);
+            console.log("message is" + message);
             exchangeAlertMessage.append(message)
 
         }
     }
 
+    console.log("message is" + exchangeAlertMessage.toString().length);
     //alert message
     if (exchangeAlertMessage.toString().length > 0) {
-        console.log("alert price is " + exchangePinedMessage.toString());
 
         //let alertMessageKeyboard = Markup.inlineKeyboard([Markup.button.url(exchange, "https://stackoverflow.com/"), Markup.button.url("binance", "https://stackoverflow.com/")], { columns: 2 });
 
@@ -87,18 +63,18 @@ function handleCoinsList(exchange, messageId, coinArray) {
     }
 
     //update exchange pinned message
-    console.log(exchange + " : message Updated ");
+    //console.log(exchange + " : message Updated ");
 
-    if (isProduction)
-        bot.telegram.editMessageText('@crypto_arbitrage_signal',
-            messageId,
-            messageId,
-            exchangePinedMessage.toString(),
-            pinedMessageKeyboard
-        ).catch((err) => {
-            console.log(exchange + " :errooooor : " + err);
-            //setTimeout(function () { handleCoinsList(exchange, messageId, coinArray) }, 500)
-        })
+    // if (isProduction)
+    //     bot.telegram.editMessageText('@crypto_arbitrage_signal',
+    //         messageId,
+    //         messageId,
+    //         exchangePinedMessage.toString(),
+    //         pinedMessageKeyboard
+    //     ).catch((err) => {
+    //         console.log(exchange + " :errooooor : " + err);
+    //         //setTimeout(function () { handleCoinsList(exchange, messageId, coinArray) }, 500)
+    //     })
 
     //console.log(exchange +"--"+ global.exchangesArrays.size );
 
