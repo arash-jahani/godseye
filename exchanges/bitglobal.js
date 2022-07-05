@@ -31,7 +31,7 @@ function allTickers(globItems) {
 
                 let foundItem = cointsListFiltered.find(e => e.s.replace('-USDT','USDT') === globItem.symbol)
 
-                if (foundItem === undefined || foundItem.s==="BTT-USDT"|| foundItem.s==="MIR-USDT"|| foundItem.s==="PLA-USDT"|| foundItem.s==="UNFI-USDT") {
+                if (foundItem === undefined || foundItem.s==="BTT-USDT"|| foundItem.s==="MIR-USDT"|| foundItem.s==="PLA-USDT"|| foundItem.s==="UNFI-USDT"|| foundItem.s==="GMT-USDT") {
                     return
                 }
 
