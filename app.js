@@ -80,7 +80,7 @@ cron.schedule('*/1 * * * *', () => {
       setTimeout(function () { EX_catex.getData(filteredList)}, 11000 )
       setTimeout(function () { EX_ascendex.getData(filteredList)}, 12000 )
       setTimeout(function () { EX_decoin.getData(filteredList)}, 13000 )
-      setTimeout(function () { EX_bitglobal.getData(filteredList)}, 14000 )
+      //setTimeout(function () { EX_bitglobal.getData(filteredList)}, 14000 )
 
 
     } catch (error) {
