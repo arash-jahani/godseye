@@ -67,7 +67,7 @@ cron.schedule('*/1 * * * *', () => {
 
       console.log("binance size :" + filteredList.length);
 
-      setTimeout(function () { EX_cointiger.getData(filteredList)}, 1000 )
+      //setTimeout(function () { EX_cointiger.getData(filteredList)}, 1000 )
       setTimeout(function () { EX_fatbtc.getData(filteredList)}, 2000 )
       setTimeout(function () { EX_kickex.getData(filteredList)}, 3000 )
       setTimeout(function () { EX_exmarkets.getData(filteredList)}, 4000 )
