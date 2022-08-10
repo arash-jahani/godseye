@@ -36,7 +36,7 @@ function allTickers(globItems) {
                 if (foundItem === undefined 
                     || foundItem.symbol==="XRPBEAR/USDT"|| foundItem.symbol==="BNBBEAR/USDT"|| foundItem.symbol==="ETHBEAR/USDT"|| foundItem.symbol==="EOSBULL/USDT"
                     || foundItem.symbol==="EOSBEAR/USDT"|| foundItem.symbol==="XRPBULL/USDT"|| foundItem.symbol==="BOND/USDT"
-                    || foundItem.symbol==="BTT/USDT" || foundItem.symbol==="FIO/USDT") {
+                    || foundItem.symbol==="BTT/USDT" || foundItem.symbol==="FIO/USDT" || foundItem.symbol==="QUICK/USDT") {
                     return
                 }
 
