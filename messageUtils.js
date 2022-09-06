@@ -37,7 +37,7 @@ function handleCoinsList(exchange, messageId, coinArray) {
         let coin = coinArray[index]
 
         // check if +10 diff exist send message to users subscribed
-        if ((coin.getDiff() > 10) && coin.getEXVol() > 10000) {
+        if ((coin.getDiff() < 70) &&(coin.getDiff() > 10) && coin.getEXVol() > 10000) {
 
             //send new message
             let message = priceChangeAlertMessage(coin)
