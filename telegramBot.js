@@ -112,7 +112,7 @@ async function join(chatId) {
     var displayMessage = ""
 
     var plan1 = `1 Month: 9 USDT`
-    var plan2 = `1 Year: 29 USDT`
+    var plan2 = `12 Months: 29 USDT`
 
 
     // if (userSubscription.invited_code >0) {
@@ -127,10 +127,10 @@ async function join(chatId) {
     console.log("discount is:" + discount)
 
 
-    displayMessage = displayMessage + `The following subscription plans are available, \n choose on of them please `;
+    displayMessage = displayMessage + `The following subscription plans are available, \n choose one of them `;
 
-    bot.telegram.sendMessage(chatId, displayMessage, {
-        parse_mode: 'HTML',
+    bot.telegram.sendPhoto(chatId, { source: 'images/discount_offer.jpg' }, {
+        caption: displayMessage,
         reply_markup: {
             inline_keyboard: [
                 [{
