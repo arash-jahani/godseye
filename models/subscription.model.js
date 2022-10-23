@@ -7,8 +7,9 @@ module.exports = (sequelize, Sequelize) => {
       },
       phone: {
         type: Sequelize.STRING,
-        allowNull: false,
-        unique: true
+        defaultValue: ""
+        // allowNull: false,
+        // unique: true
       },
       chat_id: {
         type: Sequelize.BIGINT,

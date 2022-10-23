@@ -5,7 +5,7 @@ const Op = db.Sequelize.Op
 // Create and Save a new Tutorial
 exports.create = async (subModel) => {
 
-    const subExist = await Subscription.findOne({ where: { phone: subModel.phone } })
+    const subExist = await Subscription.findOne({ where: { chat_id: subModel.chat_id } })
     
     if (subExist == null) {
         const result = await Subscription.create(subModel)
@@ -20,7 +20,6 @@ exports.create = async (subModel) => {
     } else {
         const result = await Subscription.update({ name: subModel.name }, {
             where: {
-                phone: subModel.phone,
                 chat_id: subModel.chat_id
             }
             

@@ -1,6 +1,8 @@
 const { request } = require('express');
 const got = require('got');
 const { Telegraf, Markup, Extra } = require('telegraf');
+const validatePhoneNumber = require('validate-phone-number-node-js');
+
 //const bot = new Telegraf('5187064542:AAFYYNCvrHXVC3pVGMKAaVlr2jLF4G_PDh0'); //membership bot
 //live api : 5187064542:AAFYYNCvrHXVC3pVGMKAaVlr2jLF4G_PDh0
 //stg api : 5118338282:AAEDTEhFqwuDwpWSo9Yg9CAz1pdf7Ocl6BU
@@ -37,70 +39,80 @@ bot.command('start', ctx => {
 
     serviceLog.reportLog(`#${ctx.chat.id}\n start `)
 
-    bot.telegram.sendMessage(ctx.chat.id, `Good to meet you!🤩\nWelcome to the 'Crypto Arbitrage Signal' membership bot.\n/join\n `)
+    bot.telegram.sendMessage(ctx.chat.id, `Good to meet you!🤩\nWelcome to the 'Crypto Arbitrage Signal' membership bot.\nStart your subscription by clicking the join button\n/join\n `)
 })
 
-bot.command('join', ctx => {
+bot.command('join', async (ctx) => {
 
-    bot.telegram.sendMessage(ctx.chat.id, "Your account will be created by your phone number, please let us know what it is", requestPhoneKeyboard).then(() => {
-        // handle user phone
-    })
-
-})
-
-bot.on("contact", async (ctx) => {
-
-    //todo : save user info
-
-    var subModel = {
-        phone: ctx.update.message.contact.phone_number,
-        name: `${ctx.update.message.contact.first_name ?? ""} ${ctx.update.message.contact.last_name ?? ""}`,
-        username: ctx.update.message.contact.user_id ?? "",
+        var subModel = {
+    
         chat_id: ctx.chat.id,
-        last_memo: ctx.update.message.contact.user_id,
-        referral_code: ctx.update.message.contact.user_id
+       
     }
-
-    serviceLog.reportLog(`#${ctx.chat.id}\n${subModel.phone}\n${subModel.name}\n${subModel.username} contact Granted`)
 
     var userSubscription = await subController.create(subModel)
 
-    serviceLog.reportLog(`#${ctx.chat.id}\n user record:${userSubscription}`)
-
     join(ctx.chat.id)
 
-    //  if (userSubscription instanceof ){
-    //console.log(`result is: error happen ${userSubscription}`)
-    //  }else{
-    //    console.log(`result is: ${productCount}`)
-
-    //  }
-
-    //todo : check user exit and then check his subscription and if user not exist then save user's info 
-    // var subscriptionMessage = ""
-    // if (userSubscription.expire_at == 0) { //new user
-    //     subscriptionMessage = `dear ${ctx.update.message.contact.first_name}\n`
-    // } else {
-    //     subscriptionMessage = `dear ${ctx.update.message.contact.first_name} your previous subscription plan expire at ${userSubscription.expire_at}  \n`
-    // }
-
-
-
-    // let displayMessage = `Enter your invitation code to receive 15% off`;
-
-    // bot.telegram.sendMessage(ctx.chat.id, displayMessage, {
-    //     reply_markup: {
-    //         inline_keyboard: [
-    //             [{
-    //                 text: "I don't have an invite code",
-    //                 callback_data: 'join_anyway'
-    //             }
-    //             ]
-    //         ]
-    //     }
+    // bot.telegram.sendMessage(ctx.chat.id, "Your account will be created by your phone number, please let us know what it is", requestPhoneKeyboard).then(() => {
+    //     // handle user phone
     // })
 
 })
+
+// bot.on("contact", async (ctx) => {
+
+//     //todo : save user info
+
+//     var subModel = {
+//         phone: ctx.update.message.contact.phone_number,
+//         name: `${ctx.update.message.contact.first_name ?? ""} ${ctx.update.message.contact.last_name ?? ""}`,
+//         username: ctx.update.message.contact.user_id ?? "",
+//         chat_id: ctx.chat.id,
+//         last_memo: ctx.update.message.contact.user_id,
+//         referral_code: ctx.update.message.contact.user_id
+//     }
+
+//     serviceLog.reportLog(`#${ctx.chat.id}\n${subModel.phone}\n${subModel.name}\n${subModel.username} contact Granted`)
+
+//     var userSubscription = await subController.create(subModel)
+
+//     serviceLog.reportLog(`#${ctx.chat.id}\n user record:${userSubscription}`)
+
+//     join(ctx.chat.id)
+
+//     //  if (userSubscription instanceof ){
+//     //console.log(`result is: error happen ${userSubscription}`)
+//     //  }else{
+//     //    console.log(`result is: ${productCount}`)
+
+//     //  }
+
+//     //todo : check user exit and then check his subscription and if user not exist then save user's info 
+//     // var subscriptionMessage = ""
+//     // if (userSubscription.expire_at == 0) { //new user
+//     //     subscriptionMessage = `dear ${ctx.update.message.contact.first_name}\n`
+//     // } else {
+//     //     subscriptionMessage = `dear ${ctx.update.message.contact.first_name} your previous subscription plan expire at ${userSubscription.expire_at}  \n`
+//     // }
+
+
+
+//     // let displayMessage = `Enter your invitation code to receive 15% off`;
+
+//     // bot.telegram.sendMessage(ctx.chat.id, displayMessage, {
+//     //     reply_markup: {
+//     //         inline_keyboard: [
+//     //             [{
+//     //                 text: "I don't have an invite code",
+//     //                 callback_data: 'join_anyway'
+//     //             }
+//     //             ]
+//     //         ]
+//     //     }
+//     // })
+
+// })
 
 async function join(chatId) {
 
@@ -150,12 +162,12 @@ async function join(chatId) {
 // bot.action("join_anyway", (ctx) => {
 //     join(ctx.chat.id)
 // })
-bot.hears("Cancel", (ctx) => {
+// bot.hears("Cancel", (ctx) => {
 
-    serviceLog.reportLog(`#${ctx.chat.id}\n contact denied!`)
-    //Print Log cancel
-    bot.telegram.sendMessage(ctx.chat.id, "If you would like to subscribe, please provide your phone number. \n /join")
-})
+//     serviceLog.reportLog(`#${ctx.chat.id}\n contact denied!`)
+//     //Print Log cancel
+//     bot.telegram.sendMessage(ctx.chat.id, "If you would like to subscribe, please provide your phone number. \n /join")
+// })
 bot.command("contact_us", (ctx) => {
     //Print Log cancel
     serviceLog.reportLog(`#${ctx.chat.id}\n contact us`)
@@ -506,28 +518,31 @@ bot.on("text", async ctx => {
     if (validUrl.isUri(recivedMessage)) {
 
 
-        response = "After the transaction is confirmed, you will receive a message and an invitation link"
+        response = "And finally enter your phone number please or send the transaction link to our support account: \n/contact_us\n\nAfter the transaction is confirmed, you will receive a message and an invitation link"
 
 
-    } else {
-        response = 'message wrong!';
+    } else if (validatePhoneNumber.validate(recivedMessage)){
+        response = "Hey! So happy you've joined our community, we will call you soon."
+
+    }else{
+        response = 'message is wrong! contact us if you have any question \n/contact_us';
     }
     bot.telegram.sendMessage(ctx.chat.id, response, { disable_web_page_preview: 'true' })
 
 })
 
-const requestPhoneKeyboard = {
-    "reply_markup": {
-        "one_time_keyboard": true,
-        "keyboard": [
-            [{
-                text: "My phone number",
-                request_contact: true,
-            }],
-            ["Cancel"]
-        ]
-    }
-};
+// const requestPhoneKeyboard = {
+//     "reply_markup": {
+//         "one_time_keyboard": true,
+//         "keyboard": [
+//             [{
+//                 text: "My phone number",
+//                 request_contact: true,
+//             }],
+//             ["Cancel"]
+//         ]
+//     }
+// };
 
 
 
