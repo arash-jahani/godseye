@@ -399,7 +399,7 @@ async function calcHowMuchTokenHaveToSend(chatId, selectedCoin, coinId) {
             showSelectedCryptoInfo(chatId, selectedCoin, formatPrice(finalAmount))
 
         } catch (error) {
-            showSelectedCryptoInfo(chatId, selectedCoin, selectedAmount + " USDT" + error)
+            showSelectedCryptoInfo(chatId, selectedCoin, selectedAmount + " USDT as ")
         };
     })();
 }
