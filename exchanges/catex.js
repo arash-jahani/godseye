@@ -31,7 +31,7 @@ function allTickers(globItems) {
 
                 let foundItem = cointsListFiltered.find(e => e.pair.replace('/USDT','USDT').toUpperCase() === globItem.symbol)
 
-                if (foundItem === undefined || foundItem.symbol==="ATM/USDT" || foundItem.symbol==="BTT/USDT") {
+                if (foundItem === undefined || foundItem.symbol==="ATM/USDT" || foundItem.symbol==="BTT/USDT"|| foundItem.symbol==="FTT/USDT") {
                     return
                 }
 
