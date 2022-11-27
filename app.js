@@ -24,6 +24,7 @@ const EX_bitglobal = require('./exchanges/bitglobal.js')
 require("./routes/asset.routes")(app);
 
 
+
 const tekegranBot = require('./telegramBot.js')
 tekegranBot.launchBot();
 
