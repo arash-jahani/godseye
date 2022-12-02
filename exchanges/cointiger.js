@@ -31,6 +31,8 @@ function allTickers(globItems) {
             cointsList["CVPUSDT"]=undefined
             cointsList["MCUSDT"]=undefined
             cointsList["FTTUSDT"]=undefined
+            cointsList["SRMUSDT"]=undefined
+
             coinArray = [];
 
             globItems.forEach(globItem => {

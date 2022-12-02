@@ -32,7 +32,7 @@ function allTickers(globItems) {
 
                 let foundItem = cointsList[globItem.symbol.replace('USDT', '-USDT').toLowerCase()]
 
-                if (foundItem === undefined || foundItem.symbol==="BTT/USDT"|| foundItem.symbol==="FTT/USDT") {
+                if (foundItem === undefined || foundItem.symbol==="BTT/USDT"|| foundItem.symbol==="FTT/USDT" | foundItem.symbol==="SRM/USDT") {
                     return
                 }
                 if (foundItem.volume < 5000) {

@@ -31,7 +31,7 @@ function allTickers(globItems) {
 
                 let foundItem = cointsList[globItem.symbol.replace('/USDT','_USDT').toUpperCase()]
 
-                if (foundItem === undefined|| foundItem.symbol==="FTT/USDT" || foundItem.symbol==="BTT/USDT"|| foundItem.symbol==="GMT/USDT") {
+                if (foundItem === undefined|| foundItem.symbol==="FTT/USDT" || foundItem.symbol==="BTT/USDT"|| foundItem.symbol==="GMT/USDT"|| foundItem.symbol==="SRM/USDT") {
                     return
                 }
                 if (foundItem.vol < 5000) {
