@@ -180,7 +180,7 @@ bot.action('contact_us', ctx => {
 });
 bot.action('plan1', ctx => {
 
-    showPaymentSolutionsList(ctx.chat.id, 9)
+    showPaymentSolutionsList(ctx.chat.id, 19)
 
     return
     (async () => {
