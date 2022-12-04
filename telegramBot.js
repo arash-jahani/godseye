@@ -123,8 +123,8 @@ async function join(chatId) {
     //var userSubscription = await subController.findByChatId(chatId)
     var displayMessage = ""
 
-    var plan1 = `1 Month: 6 USDT`
-    var plan2 = `12 Months: 29 USDT`
+    var plan1 = `1 Month: 19 USDT`
+    var plan2 = `12 Months: 39 USDT`
 
 
     // if (userSubscription.invited_code >0) {
@@ -141,7 +141,7 @@ async function join(chatId) {
 
     displayMessage = displayMessage + `The following subscription plans are available, \n choose one of them `;
 
-    bot.telegram.sendPhoto(chatId, { source: 'images/discount_offer2.jpg' }, {
+    bot.telegram.sendPhoto(chatId, { source: 'images/discount_offer.jpg' }, {
         caption: displayMessage,
         reply_markup: {
             inline_keyboard: [
@@ -180,7 +180,7 @@ bot.action('contact_us', ctx => {
 });
 bot.action('plan1', ctx => {
 
-    showPaymentSolutionsList(ctx.chat.id, 6)
+    showPaymentSolutionsList(ctx.chat.id, 9)
 
     return
     (async () => {
@@ -209,7 +209,7 @@ bot.action('plan1', ctx => {
     })()
 });
 bot.action('plan2', ctx => {
-    showPaymentSolutionsList(ctx.chat.id, 29)
+    showPaymentSolutionsList(ctx.chat.id, 39)
 });
 
 
