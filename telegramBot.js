@@ -243,7 +243,7 @@ async function showPaymentSolutionsList(chatId, amount) {
     serviceLog.reportLog(`#${chatId}\n ${amount} pay message`)
 
 
-    let displayMessage = `Select one of the items below and send ${amount} USDTs of selected coin to its wallet address`
+    let displayMessage = `Select one of the items below and send ${amount} USDTs of selected coin to that's wallet address`
 
     bot.telegram.sendMessage(chatId, displayMessage, {
         reply_markup: {
