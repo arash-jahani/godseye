@@ -33,7 +33,7 @@ function allTickers(globItems) {
 
                 let foundItem = cointsListFiltered.find(e => e.symbol.replace('/','') === globItem.symbol)
 
-                if (foundItem === undefined|| foundItem.symbol==="SRM/USDT"|| foundItem.symbol==="FTT/USDT" || foundItem.symbol==="DNT/USDT" ||foundItem.symbol==="GAL/USDT" ||foundItem.symbol==="BTT/USDT" || foundItem.symbol==="BULL/USDT" || foundItem.symbol==="GMT/USDT"|| foundItem.symbol==="EPS/USDT") {
+                if (foundItem === undefined|| foundItem.symbol==="MIR/USDT"|| foundItem.symbol==="SRM/USDT"|| foundItem.symbol==="FTT/USDT" || foundItem.symbol==="DNT/USDT" ||foundItem.symbol==="GAL/USDT" ||foundItem.symbol==="BTT/USDT" || foundItem.symbol==="BULL/USDT" || foundItem.symbol==="GMT/USDT"|| foundItem.symbol==="EPS/USDT") {
                     return
                 }
 

@@ -32,7 +32,7 @@ function allTickers(globItems) {
 
                 let foundItem = cointsListFiltered.find(e => e.currency_pair_code.toUpperCase() === globItem.symbol)
 
-                if (foundItem === undefined|| foundItem.currency_pair_code === "SRMUSDT" || foundItem.currency_pair_code === "FTTUSDT"|| foundItem.currency_pair_code === "XNOUSDT" || foundItem.currency_pair_code === "BTTUSDT") {
+                if (foundItem === undefined|| foundItem.currency_pair_code === "MIRUSDT" || foundItem.currency_pair_code === "SRMUSDT" || foundItem.currency_pair_code === "FTTUSDT"|| foundItem.currency_pair_code === "XNOUSDT" || foundItem.currency_pair_code === "BTTUSDT") {
                     return
                 }
 

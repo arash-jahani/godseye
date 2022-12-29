@@ -32,6 +32,7 @@ function allTickers(globItems) {
             cointsList["MCUSDT"]=undefined
             cointsList["FTTUSDT"]=undefined
             cointsList["SRMUSDT"]=undefined
+            cointsList["MIRUSDT"]=undefined
 
             coinArray = [];
 

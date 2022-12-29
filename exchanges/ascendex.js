@@ -34,7 +34,7 @@ function allTickers(globItems) {
                 let foundItem = cointsListFiltered.find(e => e.symbol.replace('/','') === globItem.symbol)
 
                 if (foundItem === undefined 
-                    || foundItem.symbol==="XRPBEAR/USDT"|| foundItem.symbol==="BNBBEAR/USDT"|| foundItem.symbol==="ETHBEAR/USDT"|| foundItem.symbol==="EOSBULL/USDT"
+                    || foundItem.symbol==="MIR/USDT"|| foundItem.symbol==="XRPBEAR/USDT"|| foundItem.symbol==="BNBBEAR/USDT"|| foundItem.symbol==="ETHBEAR/USDT"|| foundItem.symbol==="EOSBULL/USDT"
                     || foundItem.symbol==="EOSBEAR/USDT"|| foundItem.symbol==="XRPBULL/USDT"|| foundItem.symbol==="BOND/USDT"
                     || foundItem.symbol==="BTT/USDT" || foundItem.symbol==="FIO/USDT" || foundItem.symbol==="QUICK/USDT"|| foundItem.symbol==="FTT/USDT"
                     || foundItem.symbol==="SRM/USDT") {
