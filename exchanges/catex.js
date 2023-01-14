@@ -31,7 +31,7 @@ function allTickers(globItems) {
 
                 let foundItem = cointsListFiltered.find(e => e.pair.replace('/USDT','USDT').toUpperCase() === globItem.symbol)
 
-                if (foundItem === undefined || foundItem.symbol==="DASH/USDT" || foundItem.symbol==="MIR/USDT" || foundItem.symbol==="SRM/USDT" || foundItem.symbol==="ATM/USDT" || foundItem.symbol==="BTT/USDT"|| foundItem.symbol==="FTT/USDT") {
+                if (foundItem === undefined || foundItem.pair==="DASH/USDT" || foundItem.pair==="MIR/USDT" || foundItem.pair==="SRM/USDT" || foundItem.pair==="ATM/USDT" || foundItem.pair==="BTT/USDT"|| foundItem.pair==="FTT/USDT") {
                     return
                 }
 
