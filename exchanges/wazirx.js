@@ -32,7 +32,7 @@ function allTickers(globItems) {
 
                 let foundItem = cointsListFiltered.find(e => e.symbol.toUpperCase() === globItem.symbol)
 
-                if (foundItem === undefined || foundItem.symbol.toUpperCase()==="MIRUSDT" || foundItem.symbol.toUpperCase()==="SRMUSDT" || foundItem.symbol.toUpperCase()==="FTTUSDT" || foundItem.symbol.toUpperCase()==="BTTUSDT"|| foundItem.symbol.toUpperCase()==="BURGERUSDT") {
+                if (foundItem === undefined || foundItem.symbol.toUpperCase()==="HNTUSDT" || foundItem.symbol.toUpperCase()==="MIRUSDT" || foundItem.symbol.toUpperCase()==="SRMUSDT" || foundItem.symbol.toUpperCase()==="FTTUSDT" || foundItem.symbol.toUpperCase()==="BTTUSDT"|| foundItem.symbol.toUpperCase()==="BURGERUSDT") {
                     return
                 }
 
