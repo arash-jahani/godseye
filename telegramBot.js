@@ -141,7 +141,7 @@ async function join(chatId) {
 
     displayMessage = displayMessage + `The following subscription plans are available, \n choose one of them `;
 
-    bot.telegram.sendPhoto(chatId, { source: 'images/discount_offer.jpg' }, {
+    bot.telegram.sendPhoto(chatId, { source: 'images/discount_offer3.jpg' }, {
         caption: displayMessage,
         reply_markup: {
             inline_keyboard: [
