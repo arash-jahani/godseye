@@ -124,7 +124,7 @@ async function join(chatId) {
     var displayMessage = ""
 
     var plan1 = `1 Month: 19 USDT`
-    var plan2 = `12 Months: 39 USDT`
+    var plan2 = `6 Months: 39 USDT`
 
 
     // if (userSubscription.invited_code >0) {
